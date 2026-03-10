@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "name": "laravel/laravel",
     "type": "project",
@@ -66,3 +67,6 @@
     "minimum-stability": "stable",
     "prefer-stable": true
 }
+=======
+{\n    "name": "meem-event",\n    "description": "A new Laravel 10 application",\n    "require": {\n        "php": "^8.1",\n        "fideloper/proxy": "^4.4",\n        "fruitcake/laravel-cors": "^2.0",\n        "laravel/framework": "^10.0",\n        "laravel/tinker": "^2.5",\n        "yajra/laravel-datatables-oracle": "^10.0",\n        "maatwebsite/excel": "^3.1",\n        "simplesoftwareio/simple-qrcode": "^4.0",\n        "endroid/qr-code": "^4.0"\n    },\n    "require-dev": {\n        "phpunit/phpunit": "^9.5"\n    },\n    "autoload": {\n        "psr-4": {\n            "App\\": "app/"\n        }\n    },\n    "autoload-dev": {\n        "psr-4": {\n            "Tests\\": "tests/"\n        }\n    },\n    "scripts": {\n        "post-autoload-dump": [\n            "Illuminate\Foundation\ComposerScripts::postAutoloadDump",\n            "php artisan package:discover --ansi"\n        ],\n        "post-install-cmd": [\n            "php artisan key:generate --ansi"\n        ]\n    },\n    "minimum-stability": "stable",\n    "prefer-stable": true\n}
+>>>>>>> remotes/origin/main
