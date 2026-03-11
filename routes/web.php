@@ -51,6 +51,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(
     Route::get('/checkins/datatable', [EventCheckinController::class, 'datatable'])->name('checkins.datatable');
     Route::get('/checkins/export', [EventCheckinController::class, 'export'])->name('checkins.export');
     Route::delete('/checkins/{checkin}', [EventCheckinController::class, 'destroy'])->name('checkins.destroy');
+
+    // Logs
+    Route::get('/logs', [EventCheckinController::class, 'index'])->name('logs.index');
 });
 
 require __DIR__ . '/auth.php';

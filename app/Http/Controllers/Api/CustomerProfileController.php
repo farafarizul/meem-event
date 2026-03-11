@@ -7,6 +7,7 @@ use App\Services\CustomerProfileService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Libraries\Far_log;
 
 class CustomerProfileController extends Controller
 {
@@ -55,6 +56,10 @@ class CustomerProfileController extends Controller
             "gold_value": 6.12
         }
          */
+        if($upstream->successful() && ($body['success'] ?? false) && isset($body['data'])) {
+            $log_data = $body['data'];
+            Far_log::insert_userlog(1, 'api', 'customer', 'profile' ,$log_data);
+        }
         if ($upstream->successful() && ($body['success'] ?? false) && isset($body['data'])) {
             $balance = $body['data']['gss_balance'] ?? 0;
             $threshold = 0.01;
