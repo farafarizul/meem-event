@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Helper;
+
 class Far_helper
 {
     public static function remove_decimal($number){

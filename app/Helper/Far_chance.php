@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Helper;
+
 use Illuminate\Support\Facades\DB;
 class Far_chance
 {

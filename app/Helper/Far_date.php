@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Helper;
+
 class Far_date
 {
     public static function add_minutes_to_dttm($minutes_to_add, $dttm = NULL, $output_format = "Y-m-d H:i:s"){
