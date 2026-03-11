@@ -20,7 +20,7 @@ class UserController extends Controller
     {
         $users = User::where('is_admin', false)
             ->where('status', 'active')
-            ->select(['id', 'meem_code', 'meem_id', 'fullname', 'phone_number', 'email', 'created_at', 'profile_picture']);
+            ->select(['user_id', 'meem_code', 'meem_id', 'fullname', 'phone_number', 'email', 'created_at', 'profile_picture']);
 
         return DataTables::of($users)
             ->addIndexColumn()
@@ -36,7 +36,7 @@ class UserController extends Controller
             })
             ->addColumn('action', function ($user) {
                 $edit = '<button class="btn btn-sm btn-warning btn-edit me-1"'
-                    . ' data-id="' . $user->id . '"'
+                    . ' data-id="' . $user->user_id . '"'
                     . ' data-meemcode="' . e($user->meem_code) . '"'
                     . ' data-meemid="' . e($user->meem_id ?? '') . '"'
                     . ' data-fullname="' . e($user->fullname) . '"'
@@ -44,7 +44,7 @@ class UserController extends Controller
                     . ' data-email="' . e($user->email ?? '') . '">'
                     . '<i class="bi bi-pencil-fill"></i> Edit</button>';
                 $del = '<button class="btn btn-sm btn-danger btn-delete"'
-                    . ' data-id="' . $user->id . '"'
+                    . ' data-id="' . $user->user_id . '"'
                     . ' data-name="' . e($user->fullname) . '">'
                     . '<i class="bi bi-trash-fill"></i> Delete</button>';
                 return $edit . $del;
@@ -57,11 +57,11 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
-            'meem_code'    => 'required|string|max:50|unique:users,meem_code,' . $user->id,
+            'meem_code'    => 'required|string|max:50|unique:users,meem_code,' . $user->user_id . ',user_id',
             'meem_id'      => 'nullable|string|max:100',
             'fullname'     => 'required|string|max:255',
             'phone_number' => 'required|string|max:20',
-            'email'        => 'nullable|email|max:255|unique:users,email,' . $user->id,
+            'email'        => 'nullable|email|max:255|unique:users,email,' . $user->user_id . ',user_id',
         ]);
 
         $user->update($validated);

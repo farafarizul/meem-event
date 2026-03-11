@@ -11,7 +11,7 @@
                 <select name="event_id" id="event-selector" class="form-select form-select-sm" style="max-width:350px;">
                     <option value="">-- All Events --</option>
                     @foreach ($events as $event)
-                        <option value="{{ $event->id }}" {{ (string) $selectedEventId === (string) $event->id ? 'selected' : '' }}>
+                        <option value="{{ $event->event_id }}" {{ (string) $selectedEventId === (string) $event->event_id ? 'selected' : '' }}>
                             {{ $event->event_name }}
                             <small>({{ $event->unique_identifier }})</small>
                         </option>
@@ -35,7 +35,7 @@
                 <i class="bi bi-check2-circle me-1"></i>
                 Check-in Records
                 @if ($selectedEventId)
-                    @php $selectedEvent = $events->firstWhere('id', $selectedEventId); @endphp
+                    @php $selectedEvent = $events->firstWhere('event_id', $selectedEventId); @endphp
                     @if ($selectedEvent)
                         &mdash; <span class="text-muted fw-normal">{{ $selectedEvent->event_name }}</span>
                     @endif

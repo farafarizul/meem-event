@@ -70,7 +70,7 @@ class CheckinController extends Controller
 
         ['event' => $event, 'user' => $user, 'actualUserId' => $actualUserId] = $resolved;
 
-        $alreadyCheckedIn = EventCheckin::where('event_id', $event->id)
+        $alreadyCheckedIn = EventCheckin::where('event_id', $event->event_id)
             ->where('user_id', $actualUserId)
             ->exists();
 
@@ -114,8 +114,8 @@ class CheckinController extends Controller
 
 
         // Guard: only one check-in per user per event (backend duplicate prevention)
-        $alreadyCheckedIn = EventCheckin::where('event_id', $event->id)
-            ->where('id', $actualUserId)
+        $alreadyCheckedIn = EventCheckin::where('event_id', $event->event_id)
+            ->where('user_id', $actualUserId)
             ->exists();
 
         if ($alreadyCheckedIn) {
@@ -138,7 +138,7 @@ class CheckinController extends Controller
     public function show(string $uniqueIdentifier)
     {
         $event = Event::where('unique_identifier', $uniqueIdentifier)->firstOrFail();
-        $users = User::where('is_admin', false)->orderBy('meem_code')->get(['id', 'meem_code', 'fullname', 'phone_number']);
+        $users = User::where('is_admin', false)->orderBy('meem_code')->get(['user_id', 'meem_code', 'fullname', 'phone_number']);
 
         return view('checkin.show', compact('event', 'users'));
     }
@@ -148,13 +148,13 @@ class CheckinController extends Controller
         $event = Event::where('unique_identifier', $uniqueIdentifier)->firstOrFail();
 
         $request->validate([
-            'user_id' => ['required', 'integer', 'exists:users,id'],
+            'user_id' => ['required', 'integer', 'exists:users,user_id'],
         ]);
 
         $userId = (int) $request->input('user_id');
 
         // Guard: only one check-in per user per event
-        $alreadyCheckedIn = EventCheckin::where('event_id', $event->id)
+        $alreadyCheckedIn = EventCheckin::where('event_id', $event->event_id)
             ->where('user_id', $userId)
             ->exists();
 
@@ -164,7 +164,7 @@ class CheckinController extends Controller
         }
 
         $checkin = EventCheckin::create([
-            'event_id'      => $event->id,
+            'event_id'      => $event->event_id,
             'user_id'       => $userId,
             'checked_in_at' => now(),
         ]);
