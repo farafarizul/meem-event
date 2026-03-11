@@ -99,7 +99,7 @@
                         <label class="user-option"
                             data-meem="{{ strtolower($user->meem_code) }}"
                             data-name="{{ strtolower($user->fullname) }}">
-                            <input type="radio" name="user_id" value="{{ $user->id }}" required>
+                            <input type="radio" name="user_id" value="{{ $user->user_id }}" required>
                             <div>
                                 <div class="user-name">{{ $user->fullname }}</div>
                                 <div class="user-meta">

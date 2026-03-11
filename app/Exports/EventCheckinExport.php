@@ -46,7 +46,7 @@ class EventCheckinExport implements FromQuery, WithHeadings, WithMapping
     public function map($checkin): array
     {
         return [
-            $checkin->id,
+            $checkin->event_checkin_id,
             $checkin->user ? $checkin->user->meem_code : '-',
             $checkin->user ? $checkin->user->fullname : '-',
             $checkin->user ? $checkin->user->phone_number : '-',
