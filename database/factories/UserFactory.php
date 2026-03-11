@@ -17,24 +17,38 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        // Use a unique integer sequence to generate meem_code
+        static $sequence = 0;
+        $sequence++;
+
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'fullname'     => fake()->name(),
+            'phone_number' => fake()->numerify('601########'),
+            'meem_code'    => 'MEEM' . str_pad($sequence, 6, '0', STR_PAD_LEFT),
+            'email'        => fake()->unique()->safeEmail(),
+            'password'     => bcrypt('password'),
+            'is_admin'     => false,
         ];
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
-     *
-     * @return $this
+     * Mark the user as an admin.
      */
-    public function unverified(): static
+    public function admin(): static
     {
         return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
+            'is_admin' => true,
+        ]);
+    }
+
+    /**
+     * Create a user without email/password (walk-in participant style).
+     */
+    public function anonymous(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'email'    => null,
+            'password' => null,
         ]);
     }
 }
