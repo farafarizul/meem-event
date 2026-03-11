@@ -28,8 +28,8 @@
 {{-- Navbar --}}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="{{ route('admin.dashboard') }}">
-            <i class="bi bi-calendar-event me-1"></i>{{ config('app.name', 'Meem Event') }}
+        <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="{{ route('admin.dashboard') }}">
+            <img src="{{ asset('assets/icons/logo-transparent-192x192.png') }}" style="width: 30px; height: 30px; object-fit: contain;" alt="Meem Logo">{{ config('app.name', 'Meem Event') }}
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
