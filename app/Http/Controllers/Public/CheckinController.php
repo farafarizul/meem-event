@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\EventCheckin;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CheckinController extends Controller
 {
@@ -59,10 +60,28 @@ class CheckinController extends Controller
         $scannedfromapp   = (string) $request->query('scannedfromapp', '');
         $obfuscatedUserId = (string) $request->query('user_id', '');
 
+        // ── MEEM profile scan ────────────────────────────────────────────────────
+        if (Str::startsWith($scannedfromapp, 'MEEM')) {
+            if (!ctype_digit($obfuscatedUserId)) {
+                return view('checkin.invalid');
+            }
+            $actualUserId = (int) $obfuscatedUserId - self::USER_ID_OFFSET;
+            if ($actualUserId <= 0) {
+                return view('checkin.invalid');
+            }
+            $user = User::where('meem_id', $actualUserId)->where('is_admin', false)->first();
+            if (!$user) {
+                return view('checkin.invalid');
+            }
+            return view('public.profile', compact('user'));
+        }
 
+        // ── EVENT- check-in scan — fall through to existing flow ─────────────────
+        if (!Str::startsWith($scannedfromapp, 'EVENT-')) {
+            return view('checkin.invalid');
+        }
 
         $resolved = $this->decodeAndResolve($scannedfromapp, $obfuscatedUserId);
-
 
         if (!$resolved) {
             return view('checkin.invalid');
