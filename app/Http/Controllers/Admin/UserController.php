@@ -6,6 +6,7 @@ use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -45,13 +46,21 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
+            'id'           => 'required|integer|min:1|unique:users,id,' . $user->id,
             'meem_code'    => 'required|string|max:50|unique:users,meem_code,' . $user->id,
             'fullname'     => 'required|string|max:255',
             'phone_number' => 'required|string|max:20',
             'email'        => 'nullable|email|max:255|unique:users,email,' . $user->id,
         ]);
 
+        $newId = (int) $validated['id'];
+        unset($validated['id']);
+
         $user->update($validated);
+
+        if ($newId !== $user->id) {
+            DB::table('users')->where('id', $user->id)->update(['id' => $newId]);
+        }
 
         return response()->json(['success' => true, 'message' => 'User updated successfully.']);
     }

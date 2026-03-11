@@ -19,6 +19,7 @@
                     <thead class="table-dark">
                         <tr>
                             <th>#</th>
+                            <th>ID</th>
                             <th>Meem Code</th>
                             <th>Full Name</th>
                             <th>Phone Number</th>
@@ -45,6 +46,10 @@
                     </div>
                     <div class="modal-body">
                         <div id="edit-errors" class="alert alert-danger d-none"></div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">ID <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="edit-userid" name="id" required min="1">
+                        </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Meem Code <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="edit-meemcode" name="meem_code" required>
@@ -108,6 +113,7 @@
             },
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, width: '50px' },
+                { data: 'id',          name: 'id', width: '60px' },
                 { data: 'meem_code',    name: 'meem_code' },
                 { data: 'fullname',     name: 'fullname' },
                 { data: 'phone_number', name: 'phone_number' },
@@ -135,6 +141,7 @@
         $(document).on('click', '.btn-edit', function () {
             var btn = $(this);
             $('#edit-id').val(btn.data('id'));
+            $('#edit-userid').val(btn.data('id'));
             $('#edit-meemcode').val(btn.data('meemcode'));
             $('#edit-fullname').val(btn.data('fullname'));
             $('#edit-phone').val(btn.data('phone'));
