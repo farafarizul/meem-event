@@ -12,7 +12,9 @@
     <div class="min-vh-100 d-flex flex-column justify-content-center align-items-center py-4">
         <div class="mb-4 text-center">
             <a href="/" class="text-decoration-none text-dark">
-                <h4 class="fw-bold"><i class="bi bi-calendar-event me-1"></i>{{ config('app.name', 'Meem Event') }}</h4>
+                <h4 class="fw-bold d-flex align-items-center justify-content-center gap-2">
+                    <img src="{{ asset('assets/icons/logo-transparent-192x192.png') }}" style="width: 30px; height: 30px; object-fit: contain;" alt="Meem Logo">{{ config('app.name', 'Meem Event') }}
+                </h4>
             </a>
         </div>
         <div class="card shadow-sm" style="width: 100%; max-width: 420px;">

@@ -215,7 +215,7 @@
     <div class="topbar-row">
         <div class="source-pill" onclick="close_webview_back_to_dashboard();">← Back</div>
         <div class="brand">
-            <div class="brand-badge"><img src="../assets/icons/logo-transparent-192x192.png" style="width: 30px;" /></div>
+            <div class="brand-badge"><img src="{{ asset('assets/icons/logo-transparent-192x192.png') }}" style="width: 30px;" /></div>
             <div class="brand-text">
                 <small>MEEM GOLD</small>
                 <strong>{{ config('app.name', 'Meem Event') }}</strong>
