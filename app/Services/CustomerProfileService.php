@@ -20,7 +20,7 @@ class CustomerProfileService
 
     public function syncUser(array $data): void
     {
-<<<<<<< HEAD
+
         //check if user exists by meem_id, if exists update the record, if not create new record.
         if (empty($data['id'])) {
             return;
@@ -31,11 +31,10 @@ class CustomerProfileService
             //create new user
             User::create([
                 'meem_id'         => $data['id'] ?? null,
-=======
+
         User::updateOrCreate(
             ['meem_id' => $data['id'] ?? null],
             [
->>>>>>> d7fa9b4fb840e2bfa38dc9ca869e9b0faa8482eb
                 'fullname'        => $data['name'] ?? null,
                 'email'           => $data['email'] ?? null,
                 'phone_number'    => $data['contact_no'] ?? null,
