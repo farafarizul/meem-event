@@ -26,6 +26,7 @@ class UserController extends Controller
             ->addColumn('action', function ($user) {
                 $edit = '<button class="btn btn-sm btn-warning btn-edit me-1"'
                     . ' data-id="' . $user->id . '"'
+                    . ' data-meemcode="' . e($user->meem_code) . '"'
                     . ' data-fullname="' . e($user->fullname) . '"'
                     . ' data-phone="' . e($user->phone_number) . '"'
                     . ' data-email="' . e($user->email ?? '') . '">'
@@ -44,6 +45,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
+            'meem_code'    => 'required|string|max:50|unique:users,meem_code,' . $user->id,
             'fullname'     => 'required|string|max:255',
             'phone_number' => 'required|string|max:20',
             'email'        => 'nullable|email|max:255|unique:users,email,' . $user->id,

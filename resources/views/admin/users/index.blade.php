@@ -46,6 +46,10 @@
                     <div class="modal-body">
                         <div id="edit-errors" class="alert alert-danger d-none"></div>
                         <div class="mb-3">
+                            <label class="form-label fw-semibold">Meem Code <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="edit-meemcode" name="meem_code" required>
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="edit-fullname" name="fullname" required>
                         </div>
@@ -131,6 +135,7 @@
         $(document).on('click', '.btn-edit', function () {
             var btn = $(this);
             $('#edit-id').val(btn.data('id'));
+            $('#edit-meemcode').val(btn.data('meemcode'));
             $('#edit-fullname').val(btn.data('fullname'));
             $('#edit-phone').val(btn.data('phone'));
             $('#edit-email').val(btn.data('email'));
