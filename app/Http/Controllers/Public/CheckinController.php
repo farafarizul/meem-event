@@ -29,7 +29,6 @@ class CheckinController extends Controller
         }
 
         $actualUserId = (int) $obfuscatedUserId - self::USER_ID_OFFSET;
-
         if ($actualUserId <= 0) {
             return null;
         }
@@ -58,7 +57,10 @@ class CheckinController extends Controller
         $scannedfromapp   = (string) $request->query('scannedfromapp', '');
         $obfuscatedUserId = (string) $request->query('user_id', '');
 
+
+
         $resolved = $this->decodeAndResolve($scannedfromapp, $obfuscatedUserId);
+
 
         if (!$resolved) {
             return view('checkin.invalid');
