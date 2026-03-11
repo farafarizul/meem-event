@@ -27,6 +27,15 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
+        if (Auth::user()->status === 'deleted') {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect()->route('login')
+                ->withErrors(['email' => 'These credentials do not match our records.']);
+        }
+
         if (!Auth::user()->is_admin) {
             Auth::logout();
             $request->session()->invalidate();

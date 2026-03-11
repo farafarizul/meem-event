@@ -28,6 +28,7 @@ class UserFactory extends Factory
             'email'        => fake()->unique()->safeEmail(),
             'password'     => bcrypt('password'),
             'is_admin'     => false,
+            'status'       => 'active',
         ];
     }
 
