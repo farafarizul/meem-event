@@ -19,6 +19,7 @@
                     <thead class="table-dark">
                         <tr>
                             <th>#</th>
+                            <th>Photo</th>
                             <th>Meem Code</th>
                             <th>Meem ID</th>
                             <th>Full Name</th>
@@ -113,6 +114,7 @@
             },
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, width: '50px' },
+                { data: 'profile_picture', name: 'profile_picture', orderable: false, searchable: false, className: 'text-center', width: '60px' },
                 { data: 'meem_code',    name: 'meem_code' },
                 { data: 'meem_id',      name: 'meem_id', defaultContent: '-' },
                 { data: 'fullname',     name: 'fullname' },
@@ -121,7 +123,7 @@
                 { data: 'created_at',   name: 'created_at' },
                 { data: 'action',       name: 'action', orderable: false, searchable: false, className: 'text-center' }
             ],
-            order: [[1, 'asc']],
+            order: [[2, 'asc']],
             pageLength: 25,
             language: { processing: '<div class="spinner-border spinner-border-sm text-primary" role="status"></div> Loading...' }
         });
