@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('event_checkins', function (Blueprint $table) {
-            $table->id('event_checkin_id')->autoIncrement();
+            $table->id('event_checkin_id')->unique()->autoIncrement();
             $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamp('checked_in_at')->useCurrent();

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Http\Client\Response;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 
 class CustomerProfileService
@@ -19,15 +20,37 @@ class CustomerProfileService
 
     public function syncUser(array $data): void
     {
-        User::updateOrCreate(
-            ['meem_id' => $data['meem_id'] ?? null],
-            [
+        //check if user exists by meem_id, if exists update the record, if not create new record.
+        if (empty($data['id'])) {
+            return;
+        }
+
+        $user = User::query()->where('meem_id', $data['id'])->first();
+        if(!$user) {
+            //create new user
+            User::create([
+                'meem_id'         => $data['id'] ?? null,
                 'fullname'        => $data['name'] ?? null,
                 'email'           => $data['email'] ?? null,
                 'phone_number'    => $data['contact_no'] ?? null,
                 'meem_code'       => $data['cs_code'] ?? null,
                 'profile_picture' => $data['profile_picture'] ?? null,
-            ]
-        );
+                'password'     => Hash::make('password'),
+                'is_admin'     => false,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ]);
+            return;
+        }else{
+            //update existing user
+            $user->update([
+                'fullname'        => $data['name'] ?? null,
+                'email'           => $data['email'] ?? null,
+                'phone_number'    => $data['contact_no'] ?? null,
+                'meem_code'       => $data['cs_code'] ?? null,
+                'profile_picture' => $data['profile_picture'] ?? null,
+            ]);
+             return;
+        }
     }
 }

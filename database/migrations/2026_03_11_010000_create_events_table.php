@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('events', function (Blueprint $table) {
-            $table->id('event_id')->autoIncrement();
+            $table->id('event_id')->unique()->autoIncrement();
             $table->enum('category_event', ['online', 'onsite']);
             $table->string('event_name');
             $table->string('location');

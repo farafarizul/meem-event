@@ -9,13 +9,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id('user_id')->autoIncrement();
-            $table->string('fullname');
-            $table->string('phone_number');
+            $table->id('user_id');
+            $table->string('fullname')->nullable();
+            $table->string('phone_number')->nullable();
             $table->string('meem_code')->unique();
+            $table->string('meem_id')->nullable()->unique();
+            $table->string('profile_picture')->nullable();
             $table->string('email')->nullable()->unique();
             $table->string('password')->nullable();
             $table->boolean('is_admin')->default(false);
+            $table->string('status', 20)->default('active');
             $table->rememberToken();
             $table->timestamps();
         });
