@@ -141,11 +141,11 @@ class CheckinController extends Controller
             return view('checkin.already', compact('event', 'user'));
         }
 
-
+        //print_r($event->toArray()); exit();
 
         $checkin = EventCheckin::create([
-            'event_id'      => $event->id,
-            'user_id'       => $user->id,
+            'event_id'      => $event->event_id,
+            'user_id'       => $user->user_id,
             'checked_in_at' => now(),
         ]);
 

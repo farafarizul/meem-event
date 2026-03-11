@@ -15,7 +15,7 @@ return new class extends Migration
             $table->timestamp('checked_in_at')->useCurrent();
             $table->timestamps();
 
-            $table->unique(['event_id', 'user_id']);
+            //$table->unique(['event_id', 'user_id']);
             $table->index('event_id');
             $table->index('user_id');
         });
