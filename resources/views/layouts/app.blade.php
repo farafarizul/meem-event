@@ -21,7 +21,7 @@
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            {{ Auth::user()->name }}
+                            {{ Auth::user()->fullname }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
