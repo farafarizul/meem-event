@@ -13,6 +13,11 @@ Route::get('/', function () {
 
 // Public check-in routes (no auth required)
 Route::prefix('checkin')->name('checkin.')->group(function () {
+    // QR code scan flow: /checkin?scannedfromapp=EVENT-XXX&user_id=OBFUSCATED
+    Route::get('/', [CheckinController::class, 'showByQR'])->name('qr.show');
+    Route::post('/', [CheckinController::class, 'storeByQR'])->name('qr.store');
+
+    // Legacy list-based flow: /checkin/{uniqueIdentifier}
     Route::get('/{uniqueIdentifier}', [CheckinController::class, 'show'])->name('show');
     Route::post('/{uniqueIdentifier}', [CheckinController::class, 'store'])->name('store');
 });
