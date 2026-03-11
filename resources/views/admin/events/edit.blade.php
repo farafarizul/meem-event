@@ -15,6 +15,22 @@
 
                         <div class="row g-3">
                             <div class="col-md-6">
+                                <label class="form-label fw-semibold">Branch</label>
+                                <select name="branch_id"
+                                    class="form-select @error('branch_id') is-invalid @enderror">
+                                    <option value="">-- Select Branch --</option>
+                                    @foreach ($branches as $branch)
+                                        <option value="{{ $branch->branch_id }}" {{ old('branch_id', $event->branch_id) == $branch->branch_id ? 'selected' : '' }}>
+                                            {{ $branch->branch_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('branch_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
                                 <label class="form-label fw-semibold">Event Name <span class="text-danger">*</span></label>
                                 <input type="text" name="event_name"
                                     class="form-control @error('event_name') is-invalid @enderror"

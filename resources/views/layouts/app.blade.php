@@ -69,6 +69,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.branches.*') ? 'active' : '' }}"
+                       href="{{ route('admin.branches.index') }}">
+                        <i class="bi bi-diagram-3 me-2"></i>Branches
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}"
                        href="{{ route('admin.users.index') }}">
                         <i class="bi bi-people me-2"></i>Users

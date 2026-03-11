@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\EventExport;
 use App\Http\Controllers\Controller;
+use App\Models\Branch;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -48,12 +49,14 @@ class EventController extends Controller
 
     public function create()
     {
-        return view('admin.events.create');
+        $branches = Branch::orderBy('branch_name')->get();
+        return view('admin.events.create', compact('branches'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'branch_id'         => 'nullable|exists:branches,branch_id',
             'category_event'    => 'required|in:online,onsite',
             'event_name'        => 'required|string|max:255',
             'location'          => 'required|string|max:255',
@@ -94,12 +97,14 @@ class EventController extends Controller
 
     public function edit(Event $event)
     {
-        return view('admin.events.edit', compact('event'));
+        $branches = Branch::orderBy('branch_name')->get();
+        return view('admin.events.edit', compact('event', 'branches'));
     }
 
     public function update(Request $request, Event $event)
     {
         $validated = $request->validate([
+            'branch_id'         => 'nullable|exists:branches,branch_id',
             'category_event'    => 'required|in:online,onsite',
             'event_name'        => 'required|string|max:255',
             'location'          => 'required|string|max:255',

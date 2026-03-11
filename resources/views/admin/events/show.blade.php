@@ -35,6 +35,13 @@
                         <span class="font-monospace text-muted small">{{ $event->unique_identifier }}</span>
                     </div>
 
+                    @if ($event->branch)
+                    <div class="mb-3 d-flex gap-2">
+                        <i class="bi bi-diagram-3 text-muted mt-1 flex-shrink-0"></i>
+                        <span>{{ $event->branch->branch_name }}</span>
+                    </div>
+                    @endif
+
                     <div class="d-flex flex-wrap gap-2">
                         <a href="{{ route('admin.events.edit', $event) }}" class="btn btn-sm btn-warning">
                             <i class="bi bi-pencil-fill me-1"></i>Edit

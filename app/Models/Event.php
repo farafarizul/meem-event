@@ -12,6 +12,7 @@ class Event extends Model
     protected $primaryKey = 'event_id';
 
     protected $fillable = [
+        'branch_id',
         'category_event',
         'event_name',
         'location',
@@ -24,6 +25,11 @@ class Event extends Model
         'start_date' => 'date',
         'end_date'   => 'date',
     ];
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class, 'branch_id', 'branch_id');
+    }
 
     public function checkins()
     {
