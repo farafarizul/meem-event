@@ -106,20 +106,27 @@ class CheckinController extends Controller
             return view('checkin.invalid');
         }
 
+
+
         ['event' => $event, 'user' => $user, 'actualUserId' => $actualUserId] = $resolved;
+
+        $user = User::where('meem_id', $actualUserId)->where('is_admin', false)->first();
+
 
         // Guard: only one check-in per user per event (backend duplicate prevention)
         $alreadyCheckedIn = EventCheckin::where('event_id', $event->id)
-            ->where('user_id', $actualUserId)
+            ->where('id', $actualUserId)
             ->exists();
 
         if ($alreadyCheckedIn) {
             return view('checkin.already', compact('event', 'user'));
         }
 
+
+
         $checkin = EventCheckin::create([
             'event_id'      => $event->id,
-            'user_id'       => $actualUserId,
+            'user_id'       => $user->id,
             'checked_in_at' => now(),
         ]);
 
