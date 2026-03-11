@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Libraries\Far_log;
-use Far_meta;
-use Far_helper;
+use App\Helper\Far_meta;
+use App\Helper\Far_helper;
 abstract class Far_users extends Model
 {
     function __construct(array $attributes = [])
