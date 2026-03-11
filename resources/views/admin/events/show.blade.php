@@ -139,7 +139,7 @@
     @push('scripts')
     <script>
         var deleteCheckinId = null;
-        var eventId         = {{ $event->id }};
+        var eventId         = {{ $event->event_id }};
         var exportUrl       = '{{ route('admin.checkins.export') }}';
 
         var table = $('#checkins-table').DataTable({

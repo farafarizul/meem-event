@@ -59,15 +59,15 @@ class CheckinTest extends TestCase
     public function test_user_can_check_in_successfully(): void
     {
         $response = $this->post(route('checkin.store', $this->event->unique_identifier), [
-            'user_id' => $this->user->id,
+            'user_id' => $this->user->user_id,
         ]);
 
         $response->assertStatus(200);
         $response->assertSee('Check-in Successful');
 
         $this->assertDatabaseHas('event_checkins', [
-            'event_id' => $this->event->id,
-            'user_id'  => $this->user->id,
+            'event_id' => $this->event->event_id,
+            'user_id'  => $this->user->user_id,
         ]);
     }
 
@@ -75,14 +75,14 @@ class CheckinTest extends TestCase
     {
         // First check-in
         EventCheckin::create([
-            'event_id'      => $this->event->id,
-            'user_id'       => $this->user->id,
+            'event_id'      => $this->event->event_id,
+            'user_id'       => $this->user->user_id,
             'checked_in_at' => now(),
         ]);
 
         // Second attempt
         $response = $this->post(route('checkin.store', $this->event->unique_identifier), [
-            'user_id' => $this->user->id,
+            'user_id' => $this->user->user_id,
         ]);
 
         $response->assertStatus(200);

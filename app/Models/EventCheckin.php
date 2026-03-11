@@ -9,6 +9,8 @@ class EventCheckin extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'event_checkin_id';
+
     protected $fillable = [
         'event_id',
         'user_id',

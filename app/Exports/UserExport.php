@@ -42,7 +42,7 @@ class UserExport implements FromQuery, WithHeadings, WithMapping
     public function map($user): array
     {
         return [
-            $user->id,
+            $user->user_id,
             $user->meem_code,
             $user->meem_id ?? '-',
             $user->fullname,

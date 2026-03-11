@@ -14,7 +14,7 @@ class EventCheckinController extends Controller
 {
     public function index(Request $request)
     {
-        $events          = Event::orderBy('event_name')->get(['id', 'event_name', 'unique_identifier']);
+        $events          = Event::orderBy('event_name')->get(['event_id', 'event_name', 'unique_identifier']);
         $selectedEventId = $request->get('event_id');
 
         return view('admin.checkins.index', compact('events', 'selectedEventId'));
@@ -37,7 +37,7 @@ class EventCheckinController extends Controller
             ->editColumn('checked_in_at', fn ($c) => $c->checked_in_at->format('d M Y H:i'))
             ->addColumn('action', function ($checkin) {
                 return '<button class="btn btn-sm btn-danger btn-delete"'
-                    . ' data-id="' . $checkin->id . '"'
+                    . ' data-id="' . $checkin->event_checkin_id . '"'
                     . ' data-name="' . e($checkin->user ? $checkin->user->fullname : '') . '">'
                     . '<i class="bi bi-trash-fill"></i> Delete</button>';
             })

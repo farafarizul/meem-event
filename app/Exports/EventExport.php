@@ -41,7 +41,7 @@ class EventExport implements FromQuery, WithHeadings, WithMapping
     public function map($event): array
     {
         return [
-            $event->id,
+            $event->event_id,
             $event->unique_identifier,
             $event->event_name,
             ucfirst($event->category_event),
