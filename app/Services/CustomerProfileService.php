@@ -10,9 +10,11 @@ class CustomerProfileService
 {
     public function fetchProfile(string $token): Response
     {
-        $url = rtrim(config('services.meem.base_url'), '/') . '/customer/profile';
+        //$url = rtrim(config('services.meem.base_url'), '/') . '/customer/profile';
 
-        return Http::withToken($token)->timeout(15)->get($url);
+        return Http::withToken($token)
+            ->timeout(15)
+            ->get('https://meem.com.my/api/v1/customer/profile');
     }
 
     public function syncUser(array $data): void
