@@ -89,8 +89,10 @@ class CheckinController extends Controller
 
         ['event' => $event, 'user' => $user, 'actualUserId' => $actualUserId] = $resolved;
 
+        $user = User::where('meem_id', $actualUserId)->where('is_admin', false)->first();
+        
         $alreadyCheckedIn = EventCheckin::where('event_id', $event->event_id)
-            ->where('user_id', $actualUserId)
+            ->where('user_id', $user->user_id)
             ->exists();
 
         if ($alreadyCheckedIn) {
