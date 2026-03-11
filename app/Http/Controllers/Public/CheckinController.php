@@ -172,11 +172,13 @@ class CheckinController extends Controller
 
         $userId = (int) $request->input('user_id');
 
+
+
         // Guard: only one check-in per user per event
         $alreadyCheckedIn = EventCheckin::where('event_id', $event->event_id)
             ->where('user_id', $userId)
             ->exists();
-
+        //var_dump($alreadyCheckedIn); exit();
         if ($alreadyCheckedIn) {
             $user = User::findOrFail($userId);
             return view('checkin.already', compact('event', 'user'));
