@@ -38,7 +38,9 @@ class CheckinController extends Controller
             return null;
         }
 
-        $user = User::where('id', $actualUserId)->where('is_admin', false)->first();
+
+
+        $user = User::where('meem_id', $actualUserId)->where('is_admin', false)->first();
         if (!$user) {
             return null;
         }
