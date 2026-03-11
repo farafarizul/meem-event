@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id('user_id');
-            $table->string('fullname')->nullable();
-            $table->string('phone_number')->nullable();
+            $table->string('fullname');
+            $table->string('phone_number');
             $table->string('meem_code')->unique();
             $table->string('meem_id')->nullable()->unique();
             $table->string('profile_picture')->nullable();
