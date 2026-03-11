@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\EventCheckin;
 use App\Models\User;
+use App\Helper\Far_chance;
 
 class DashboardController extends Controller
 {
@@ -23,6 +24,8 @@ class DashboardController extends Controller
             ->latest('checked_in_at')
             ->take(10)
             ->get();
+
+        $fullname = Far_chance::fullname();
 
         return view('admin.dashboard', compact('stats', 'recent_checkins'));
     }

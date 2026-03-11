@@ -29,7 +29,13 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helper/Far_date.php",
+            "app/Helper/Far_helper.php",
+            "app/Helper/Far_meta.php",
+            "app/Helper/Far_chance.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
