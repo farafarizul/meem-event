@@ -7,10 +7,40 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Yajra\DataTables\Facades\DataTables;
 
 class EventController extends Controller
 {
+    public function show(Event $event)
+    {
+        $checkinUrl = route('checkin.show', $event->unique_identifier);
+        $qrSvg      = QrCode::format('svg')
+            ->size(300)
+            ->margin(2)
+            ->errorCorrection('H')
+            ->generate($checkinUrl);
+
+        return view('admin.events.show', compact('event', 'qrSvg', 'checkinUrl'));
+    }
+
+    public function qrDownload(Event $event)
+    {
+        $checkinUrl = route('checkin.show', $event->unique_identifier);
+        $qrPng      = QrCode::format('png')
+            ->size(1200)
+            ->margin(2)
+            ->errorCorrection('H')
+            ->generate($checkinUrl);
+
+        $filename = 'qr_' . $event->unique_identifier . '.png';
+
+        return response($qrPng, 200, [
+            'Content-Type'        => 'image/png',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ]);
+    }
+
     public function index()
     {
         return view('admin.events.index');
@@ -48,13 +78,15 @@ class EventController extends Controller
             ->editColumn('end_date', fn ($e) => $e->end_date->format('d M Y'))
             ->editColumn('category_event', fn ($e) => '<span class="badge bg-' . ($e->category_event === 'online' ? 'info' : 'success') . '">' . ucfirst($e->category_event) . '</span>')
             ->addColumn('action', function ($event) {
+                $view = '<a href="' . route('admin.events.show', $event->id) . '" class="btn btn-sm btn-info me-1 text-white">'
+                    . '<i class="bi bi-eye-fill"></i> View</a>';
                 $edit = '<a href="' . route('admin.events.edit', $event->id) . '" class="btn btn-sm btn-warning me-1">'
                     . '<i class="bi bi-pencil-fill"></i> Edit</a>';
                 $del = '<button class="btn btn-sm btn-danger btn-delete"'
                     . ' data-id="' . $event->id . '"'
                     . ' data-name="' . e($event->event_name) . '">'
                     . '<i class="bi bi-trash-fill"></i> Delete</button>';
-                return $edit . $del;
+                return $view . $edit . $del;
             })
             ->rawColumns(['category_event', 'action'])
             ->make(true);
