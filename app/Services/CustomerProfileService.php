@@ -20,7 +20,7 @@ class CustomerProfileService
     public function syncUser(array $data): void
     {
         User::updateOrCreate(
-            ['meem_id' => $data['meem_id'] ?? null],
+            ['meem_id' => $data['id'] ?? null],
             [
                 'fullname'        => $data['name'] ?? null,
                 'email'           => $data['email'] ?? null,
