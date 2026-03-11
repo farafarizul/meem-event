@@ -56,7 +56,8 @@
         .brand { display: flex; align-items: center; gap: 12px; }
         .brand-badge {
             width: 42px; height: 42px; border-radius: 14px;
-            background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+            border-radius: 14px;
+            border: 1px solid #f0d17d;
             color: #fff;
             display: flex; align-items: center; justify-content: center;
             font-size: 18px;
@@ -212,15 +213,15 @@
 
 <header class="topbar">
     <div class="topbar-row">
+        <div class="source-pill" onclick="close_webview_back_to_dashboard();">← Back</div>
         <div class="brand">
-            <div class="brand-badge">
-                <i class="bi bi-calendar-event"></i>
-            </div>
+            <div class="brand-badge"><img src="../assets/icons/logo-transparent-192x192.png" style="width: 30px;" /></div>
             <div class="brand-text">
-                <small>Check-in Portal</small>
+                <small>MEEM GOLD</small>
                 <strong>{{ config('app.name', 'Meem Event') }}</strong>
             </div>
         </div>
+
     </div>
 </header>
 
