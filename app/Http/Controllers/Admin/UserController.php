@@ -19,7 +19,7 @@ class UserController extends Controller
     public function datatable(Request $request)
     {
         $users = User::where('is_admin', false)
-            ->select(['id', 'meem_code', 'fullname', 'phone_number', 'email', 'created_at']);
+            ->select(['id', 'meem_code', 'meem_id', 'fullname', 'phone_number', 'email', 'created_at']);
 
         return DataTables::of($users)
             ->addIndexColumn()
@@ -27,6 +27,7 @@ class UserController extends Controller
                 $edit = '<button class="btn btn-sm btn-warning btn-edit me-1"'
                     . ' data-id="' . $user->id . '"'
                     . ' data-meemcode="' . e($user->meem_code) . '"'
+                    . ' data-meemid="' . e($user->meem_id ?? '') . '"'
                     . ' data-fullname="' . e($user->fullname) . '"'
                     . ' data-phone="' . e($user->phone_number) . '"'
                     . ' data-email="' . e($user->email ?? '') . '">'
@@ -46,6 +47,7 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'meem_code'    => 'required|string|max:50|unique:users,meem_code,' . $user->id,
+            'meem_id'      => 'nullable|string|max:100',
             'fullname'     => 'required|string|max:255',
             'phone_number' => 'required|string|max:20',
             'email'        => 'nullable|email|max:255|unique:users,email,' . $user->id,

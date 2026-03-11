@@ -35,7 +35,7 @@ class UserExport implements FromQuery, WithHeadings, WithMapping
 
     public function headings(): array
     {
-        return ['#', 'Meem Code', 'Full Name', 'Phone Number', 'Email', 'Registered At'];
+        return ['#', 'Meem Code', 'Meem ID', 'Full Name', 'Phone Number', 'Email', 'Registered At'];
     }
 
     public function map($user): array
@@ -43,6 +43,7 @@ class UserExport implements FromQuery, WithHeadings, WithMapping
         return [
             $user->id,
             $user->meem_code,
+            $user->meem_id ?? '-',
             $user->fullname,
             $user->phone_number,
             $user->email ?? '-',
