@@ -19,6 +19,7 @@ class UserController extends Controller
     public function datatable(Request $request)
     {
         $users = User::where('is_admin', false)
+            ->where('status', 'active')
             ->select(['id', 'meem_code', 'meem_id', 'fullname', 'phone_number', 'email', 'created_at']);
 
         return DataTables::of($users)
@@ -60,7 +61,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        $user->delete();
+        $user->update(['status' => 'deleted']);
 
         return response()->json(['success' => true, 'message' => 'User deleted successfully.']);
     }

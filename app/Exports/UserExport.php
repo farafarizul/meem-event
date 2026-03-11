@@ -18,7 +18,8 @@ class UserExport implements FromQuery, WithHeadings, WithMapping
 
     public function query()
     {
-        $q = User::where('is_admin', false);
+        $q = User::where('is_admin', false)
+            ->where('status', 'active');
 
         if ($this->search) {
             $term = $this->search;

@@ -43,6 +43,18 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
     }
 
+    public function test_deleted_users_cannot_login(): void
+    {
+        $user = User::factory()->create(['is_admin' => true, 'status' => 'deleted']);
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $this->assertGuest();
+    }
+
     public function test_users_can_not_authenticate_with_invalid_password(): void
     {
         $user = User::factory()->create(['is_admin' => true]);
