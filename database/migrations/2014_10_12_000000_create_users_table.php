@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id('user_id');
             $table->string('fullname');
             $table->string('phone_number');
-            $table->string('meem_code')->unique();
+            $table->string('meem_code')->nullable();
             $table->string('meem_id')->nullable()->unique();
             $table->string('profile_picture')->nullable();
             $table->string('email')->nullable()->unique();

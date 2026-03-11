@@ -27,30 +27,28 @@ class CustomerProfileService
         }
 
         $user = User::query()->where('meem_id', $data['id'])->first();
-
         if(!$user) {
             //create new user
-            $a = User::insert([
-                'fullname'     => fake()->name(),
-                'phone_number' => fake()->numerify('601########'),
-                'meem_code'    => 'MEEM' . str_pad(4, 6, '0', STR_PAD_LEFT),
-                'email'        => fake()->unique()->safeEmail(),
-                'password'     => Hash::make('password'),
-                'is_admin'     => false,
-                'created_at'   => now(),
-                'updated_at'   => now(),
-                ]);
-
-            var_dump($a); exit();
+            User::create([
+                'fullname'        => $data['name'] ?? null,
+                'email'           => $data['email'] ?? null,
+                'phone_number'    => $data['contact_no'] ?? null,
+                'meem_code'       => $data['cs_code'] ?? null,
+                'meem_id'         => $data['id'] ?? null,
+                'profile_picture' => $data['profile_picture'] ?? null,
+                'updated_at'      => now(),
+            ]);
              return;
         }else{
             //update existing user
+            //print_r($user->toArray()); exit();
             $user->update([
                 'fullname'        => $data['name'] ?? null,
                 'email'           => $data['email'] ?? null,
                 'phone_number'    => $data['contact_no'] ?? null,
                 'meem_code'       => $data['cs_code'] ?? null,
                 'profile_picture' => $data['profile_picture'] ?? null,
+                'updated_at'      => now(),
             ]);
              return;
         }
