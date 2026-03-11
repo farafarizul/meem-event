@@ -19,7 +19,7 @@ class EventController extends Controller
             ->size(300)
             ->margin(2)
             ->errorCorrection('H')
-            ->generate($checkinUrl);
+            ->generate($event->unique_identifier);
 
         return view('admin.events.show', compact('event', 'qrSvg', 'checkinUrl'));
     }
@@ -31,7 +31,7 @@ class EventController extends Controller
             ->size(1200)
             ->margin(2)
             ->errorCorrection('H')
-            ->generate($checkinUrl);
+            ->generate($event->unique_identifier);
 
         $filename = 'qr_' . $event->unique_identifier . '.png';
 
