@@ -25,16 +25,29 @@ class EventCheckinController extends Controller
         $eventId = $request->get('event_id');
 
         $checkins = EventCheckin::with(['user', 'event'])
-            ->when($eventId, fn ($q) => $q->where('event_id', $eventId))
-            ->select('event_checkins.*');
+
+            ->leftJoin('users', 'users.user_id', '=', 'event_checkins.user_id')
+            ->leftJoin('events', 'events.event_id', '=', 'event_checkins.event_id')
+            ->select([
+                'event_checkins.event_checkin_id',
+                'event_checkins.checked_in_at',
+                'users.fullname as user_fullname',
+                'events.event_name as event_name',
+                'users.user_id as user_id',
+                'users.meem_code as meem_code',
+                'users.fullname as fullname',
+                'users.phone_number as phone_number',
+            ])
+            ->when($eventId, function ($query) use ($eventId) {
+                $query->where('event_checkins.event_id', $eventId);
+            })
+            ->orderBy('event_checkins.checked_in_at', 'desc');
+
+        //print_r($checkins->toSql()); // Debug: Output the generated SQL query
+        // exit();
 
         return DataTables::of($checkins)
             ->addIndexColumn()
-            ->addColumn('meem_code', fn ($c) => $c->user ? $c->user->meem_code : '-')
-            ->addColumn('fullname', fn ($c) => $c->user ? $c->user->fullname : '-')
-            ->addColumn('phone_number', fn ($c) => $c->user ? $c->user->phone_number : '-')
-            ->addColumn('event_name', fn ($c) => $c->event ? $c->event->event_name : '-')
-            ->editColumn('checked_in_at', fn ($c) => $c->checked_in_at->format('d M Y H:i'))
             ->addColumn('action', function ($checkin) {
                 return '<button class="btn btn-sm btn-danger btn-delete"'
                     . ' data-id="' . $checkin->event_checkin_id . '"'
