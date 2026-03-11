@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'meem' => [
+        'base_url' => env('MEEM_API_BASE_URL', 'https://meem.com.my/api/v1'),
+    ],
+
 ];

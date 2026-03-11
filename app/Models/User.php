@@ -16,6 +16,7 @@ class User extends Authenticatable
         'phone_number',
         'meem_code',
         'meem_id',
+        'profile_picture',
         'email',
         'password',
         'is_admin',
