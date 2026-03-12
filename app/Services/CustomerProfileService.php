@@ -47,6 +47,7 @@ class CustomerProfileService
                 'fullname'        => $data['name'] ?? null,
                 'email'           => $data['email'] ?? null,
                 'phone_number'    => $data['contact_no'] ?? null,
+                'meem_code'       => $data['cs_code'] ?? null,
                 'profile_picture' => $data['profile_picture'] ?? null,
                 'updated_at'      => now(),
             ]);

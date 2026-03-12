@@ -33,7 +33,6 @@
                 <label class="form-label fw-semibold mb-0 text-nowrap">
                     <i class="bi bi-funnel me-1"></i>Filters:
                 </label>
-
                 <select id="filter-meem-code" class="form-select form-select-sm select2-filter" style="min-width:170px;">
                     <option value="">All Meem Codes</option>
                     @foreach ($meemCodes as $code)
