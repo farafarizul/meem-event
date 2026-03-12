@@ -82,6 +82,8 @@ abstract class Far_gold extends Model
         $latest_gold_price = self::get_latest_gold_price();
         $gold_price = $latest_gold_price ? (double)number_format($latest_gold_price->buy_price, 2, '.', '') : 0;
         $gss_gold_value = (double)number_format($gss_balance * $gold_price, 2, '.', '');
+        //$gss_gold_value must be in currency format with 2 decimal places and use dot as decimal separator
+        $gss_gold_value = number_format($gss_gold_value, 2, '.', '');
         $gss_detail = [
             'balance' => round($gss_balance, 4),
             'gold_price' => $gold_price,
