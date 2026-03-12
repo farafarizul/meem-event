@@ -26,7 +26,10 @@ class CustomerProfileService
             return;
         }
 
-        $user = User::query()->where('meem_code', $data['cs_code'])->first();
+        $user = User::query()
+            ->where('meem_code', $data['cs_code'])
+            ->where('status', 'active')
+            ->first();
 
         if(!$user) {
             //create new user
