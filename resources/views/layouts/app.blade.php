@@ -110,6 +110,12 @@
                         <i class="bi bi-coin me-2"></i>Silver Price
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.apk-detail.*') ? 'active' : '' }}"
+                       href="{{ route('admin.apk-detail.index') }}">
+                        <i class="bi bi-android2 me-2"></i>APK Management
+                    </a>
+                </li>
             </ul>
         </nav>
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ApkDetailController;
 use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\Admin\LogController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -12,6 +13,9 @@ use App\Http\Controllers\Admin\SilverPriceSyncSettingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Public\CheckinController;
 use Illuminate\Support\Facades\Route;
+
+// Public APK download (no auth required)
+Route::get('/apk/download/{apkDetail}', [ApkDetailController::class, 'download'])->name('apk.download');
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -85,6 +89,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(
     Route::get('/silver-price', [SilverPriceController::class, 'index'])->name('silver-price.index');
     Route::get('/silver-price/datatable', [SilverPriceController::class, 'datatable'])->name('silver-price.datatable');
     Route::post('/silver-price/sync-now', [SilverPriceController::class, 'syncNow'])->name('silver-price.sync-now');
+
+    // APK File Management
+    Route::get('/apk-detail', [ApkDetailController::class, 'index'])->name('apk-detail.index');
+    Route::get('/apk-detail/create', [ApkDetailController::class, 'create'])->name('apk-detail.create');
+    Route::post('/apk-detail', [ApkDetailController::class, 'store'])->name('apk-detail.store');
+    Route::get('/apk-detail/datatable', [ApkDetailController::class, 'datatable'])->name('apk-detail.datatable');
+    Route::delete('/apk-detail/{apkDetail}', [ApkDetailController::class, 'destroy'])->name('apk-detail.destroy');
 
     // Silver Price Sync Settings
     Route::get('/settings/silver-price-sync', [SilverPriceSyncSettingController::class, 'index'])->name('silver-price.settings');
