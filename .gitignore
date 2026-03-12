@@ -18,3 +18,4 @@ yarn-error.log
 /.vscode
 /database/database.sqlite
 /.phpunit.result.cache
+.env.local
