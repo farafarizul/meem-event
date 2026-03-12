@@ -95,7 +95,7 @@
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.logs.*') ? 'active' : '' }}"
                        href="{{ route('admin.logs.index') }}">
-                        <i class="bi bi-check2-circle me-2"></i>Logs
+                        <i class="bi bi-journal-text me-2"></i>Logs
                     </a>
                 </li>
                 <li class="nav-item">
