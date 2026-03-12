@@ -25,8 +25,7 @@ class AuthService
         $user = User::query()->where('meem_code', $meemCode)->first();
 
         if (! $user) {
-
-            User::create([
+            $user = User::create([
                 'fullname'        => "-",
                 'email'           => "-",
                 'phone_number'    => "-",
@@ -39,6 +38,18 @@ class AuthService
             Log::warning('AuthLogin: no local user found for meem_code', ['meem_code' => $meemCode]);
         }
 
-        $user->update(['token' => $token]);
+        $user->update(['token' => $token, 'apps_login_status' => 'logged_in']);
+    }
+
+    public function logout(string $token): Response
+    {
+        return Http::withToken($token)
+            ->timeout(15)
+            ->get('https://meem.com.my/api/v1/auth/logout');
+    }
+
+    public function syncLogout(string $meemCode): void
+    {
+        User::query()->where('meem_code', $meemCode)->update(['apps_login_status' => 'logged_out']);
     }
 }

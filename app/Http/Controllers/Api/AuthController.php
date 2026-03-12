@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Libraries\Far_log;
+use App\Models\User;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -54,6 +55,54 @@ class AuthController extends Controller
                 } catch (\Throwable $e) {
                     Log::error('AuthLogin token sync failed', ['error' => $e->getMessage()]);
                 }
+            }
+        }
+
+        return response()->json($body, $upstream->status());
+    }
+
+    public function logout(Request $request): JsonResponse
+    {
+        $request->validate([
+            'meem_code' => 'required|string',
+        ]);
+
+        $meemCode = $request->input('meem_code');
+
+        $user = User::query()->where('meem_code', $meemCode)->first();
+
+        if (! $user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found.',
+            ], 404);
+        }
+
+        if (empty($user->token)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No active session token found.',
+            ], 422);
+        }
+
+        try {
+            $upstream = $this->service->logout($user->token);
+        } catch (\Illuminate\Http\Client\ConnectionException $e) {
+            Log::error('AuthLogout upstream connection failed', ['error' => $e->getMessage()]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Authentication service temporarily unavailable.',
+            ], 502);
+        }
+
+        $body = $upstream->json();
+
+        if ($upstream->successful() && ($body['success'] ?? false)) {
+            try {
+                $this->service->syncLogout($meemCode);
+            } catch (\Throwable $e) {
+                Log::error('AuthLogout status sync failed', ['error' => $e->getMessage()]);
             }
         }
 
