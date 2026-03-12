@@ -64,7 +64,8 @@ class CustomerProfileController extends Controller
         if ($upstream->successful() && ($body['success'] ?? false) && isset($body['data'])) {
 
             $gold_progress_detail = Far_gold::gold_progress_detail($body['data']['gss_balance'] ?? 0);
-            $goldPrice = 651; // This should ideally come from a reliable source or config
+
+            $gold_value_detail = Far_gold::gold_value_detail($body['data']['gss_balance'] ?? 0);
 
 
             $body['data']['gss_progress'] = [
@@ -74,12 +75,12 @@ class CustomerProfileController extends Controller
                 'progress_percentage' => $gold_progress_detail['progress_percentage'],
                 'progress_bar_percentage' => $gold_progress_detail['progress_bar_percentage'],
             ];
-            $body['data']['gold_price'] = $goldPrice;
-            $body['data']['gss_gold_value'] = 0;
+            $body['data']['gold_price'] = $gold_value_detail['gold_price'];
+            $body['data']['gss_gold_value'] = $gold_value_detail['gold_value'];
             $body['data']['gss_detail'] = [
                 'balance' => round($body['data']['gss_balance'], 4),
-                'gold_price' => $goldPrice,
-                'gold_value' => round(0, 2),
+                'gold_price' => $gold_value_detail['gold_price'],
+                'gold_value' => $gold_value_detail['gold_value'],
             ];
         }
 

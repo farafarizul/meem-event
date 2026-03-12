@@ -60,4 +60,33 @@ abstract class Far_gold extends Model
         return $gss_progress;
 
     }
+
+    /*
+     * Get latest gold price from database. table is gold_price
+     */
+    public static function get_latest_gold_price()
+    {
+        $gold_price = DB::table('gold_price')->orderBy('created_at', 'desc')->first();
+        return $gold_price;
+    }
+    /*
+     * Gold value detail is a combination of the user's gss balance, the latest gold price, and the calculated gold value of the user's gss balance. The gold value is calculated by multiplying the user's gss balance with the latest gold price. The function should return an array with the following structure:
+     * "gss_detail": {
+            "balance": 0.0094,
+            "gold_price": 644,
+            "gold_value": 6.05
+        }
+     */
+    public static function gold_value_detail($gss_balance)
+    {
+        $latest_gold_price = self::get_latest_gold_price();
+        $gold_price = $latest_gold_price ? (double)number_format($latest_gold_price->buy_price, 2, '.', '') : 0;
+        $gss_gold_value = (double)number_format($gss_balance * $gold_price, 2, '.', '');
+        $gss_detail = [
+            'balance' => round($gss_balance, 4),
+            'gold_price' => $gold_price,
+            'gold_value' => $gss_gold_value
+        ];
+        return $gss_detail;
+    }
 }
