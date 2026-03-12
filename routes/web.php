@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BranchController;
+use App\Http\Controllers\Admin\LogController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventCheckinController;
 use App\Http\Controllers\Admin\EventController;
@@ -68,7 +69,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(
     Route::delete('/checkins/{checkin}', [EventCheckinController::class, 'destroy'])->name('checkins.destroy');
 
     // Logs
-    Route::get('/logs', [EventCheckinController::class, 'index'])->name('logs.index');
+    Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+    Route::get('/logs/datatable', [LogController::class, 'datatable'])->name('logs.datatable');
 
     // Gold Price History
     Route::get('/gold-price', [GoldPriceController::class, 'index'])->name('gold-price.index');
