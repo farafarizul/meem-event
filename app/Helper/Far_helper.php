@@ -8,6 +8,13 @@ class Far_helper
     public static function decimal_one($number){
         return bcdiv($number, 1, 1);
     }
+    function truncate_decimal($val, $precision = 2) {
+        $parts = explode('.', (string)$val);
+        if (count($parts) < 2) return $val; // No decimal point found
+
+        $decimals = substr($parts[1], 0, $precision);
+        return $parts[0] . '.' . $decimals;
+    }
 
     public static function server_environment(){
         $output = [];
