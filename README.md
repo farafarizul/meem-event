@@ -149,6 +149,62 @@ http://127.0.0.1:8000
 
 ---
 
+## Task Scheduler (Cron Job) Setup
+
+This application uses **Laravel's built-in task scheduler** to periodically sync gold prices from an external API. Laravel does **not** manage cron jobs by itself — you must manually add a single cron entry to your server (or cPanel) to trigger the scheduler every minute. Laravel then handles the rest internally.
+
+### Why is this required?
+
+Laravel's scheduler works by having one cron job call `php artisan schedule:run` every minute. Laravel checks the schedule definition in `app/Console/Kernel.php` and decides which commands to run at any given time.
+
+**Currently scheduled task:**
+
+| Command             | Frequency     | Description                                                  |
+|---------------------|---------------|--------------------------------------------------------------|
+| `gold-price:sync`   | Every minute  | Fetches and stores the latest gold price from the Meem API   |
+
+> The actual sync interval between API calls is configurable via `SystemSetting` in the database (default: every 5 minutes). The Laravel scheduler still needs to run every minute to respect that interval accurately.
+
+---
+
+### Adding the Cron Job in cPanel
+
+1. Log in to your **cPanel** account.
+2. Navigate to **Cron Jobs** (under the **Advanced** section).
+3. Under **Add New Cron Job**, set the frequency to **Every Minute** by selecting `* * * * *` from the common settings dropdown (or enter `*` in each of the minute, hour, day, month, and weekday fields).
+4. In the **Command** field, enter **only** the command portion (without the `* * * * *` prefix — cPanel manages the schedule separately):
+
+```bash
+cd /home/your_cpanel_username/public_html && php artisan schedule:run >> /dev/null 2>&1
+```
+
+Replace `/home/your_cpanel_username/public_html` with the **absolute path** to your Laravel project root (the folder that contains `artisan`).
+
+#### Finding the correct PHP binary path
+
+On shared cPanel hosting, you may need to use the full path to the PHP binary instead of just `php`. Common paths include:
+
+```bash
+/usr/local/bin/php
+/opt/cpanel/ea-php81/root/usr/bin/php
+```
+
+To find the correct path, open **Terminal** in cPanel and run:
+
+```bash
+which php
+```
+
+Then update your cron command accordingly. In the cPanel **Command** field, enter:
+
+```bash
+cd /home/your_cpanel_username/public_html && /usr/local/bin/php artisan schedule:run >> /dev/null 2>&1
+```
+
+> **Note:** Always use absolute paths in cPanel cron commands to avoid path resolution issues.
+
+---
+
 ## Default Admin Login
 
 After running migrations and seeders, use the following credentials to log in to the admin panel:
@@ -227,6 +283,7 @@ All major listing modules (users, check-ins, etc.) support Excel export via **Ma
 - **Local development only:** The `php artisan serve` command is for local development. Do not use it in a production environment.
 - **Database must exist before migration:** Ensure the MySQL database is created before running `php artisan migrate --seed`.
 - **Fresh seeding:** If you need to reset the database, use `php artisan migrate:fresh --seed`. This will drop all tables and re-seed from scratch.
+- **Cron job required on cPanel:** The gold price sync feature relies on Laravel's task scheduler. You must add a cron job in cPanel to run `php artisan schedule:run` every minute. See the [Task Scheduler (Cron Job) Setup](#task-scheduler-cron-job-setup) section for the exact command.
 
 ---
 
