@@ -85,7 +85,7 @@ abstract class Far_gold extends Model
         $gss_gold_value = (double)number_format($gss_balance * $gold_price, 2, '.', '');
         //$gss_gold_value must be in currency format with 2 decimal places and use dot as decimal separator. Don't round up or round down the gold value, just format it to 2 decimal places.
         $gss_gold_value = Far_helper::truncate_decimal($gss_gold_value, 2);
-
+        echo $gss_balance; exit();
         $gss_detail = [
             'balance' => $gss_balance,
             'gold_price' => $gold_price,
