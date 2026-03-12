@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventCheckinController;
 use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\GoldPriceController;
+use App\Http\Controllers\Admin\GoldPriceSyncSettingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Public\CheckinController;
 use Illuminate\Support\Facades\Route;
@@ -65,6 +67,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(
 
     // Logs
     Route::get('/logs', [EventCheckinController::class, 'index'])->name('logs.index');
+
+    // Gold Price History
+    Route::get('/gold-price', [GoldPriceController::class, 'index'])->name('gold-price.index');
+    Route::get('/gold-price/datatable', [GoldPriceController::class, 'datatable'])->name('gold-price.datatable');
+    Route::post('/gold-price/sync-now', [GoldPriceController::class, 'syncNow'])->name('gold-price.sync-now');
+
+    // Gold Price Sync Settings
+    Route::get('/settings/gold-price-sync', [GoldPriceSyncSettingController::class, 'index'])->name('gold-price.settings');
+    Route::post('/settings/gold-price-sync', [GoldPriceSyncSettingController::class, 'update'])->name('gold-price.settings.update');
 });
 
 require __DIR__ . '/auth.php';
