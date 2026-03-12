@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Libraries\Far_log;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -40,6 +41,12 @@ class AuthController extends Controller
         if ($upstream->successful() && ($body['success'] ?? false) && isset($body['data'])) {
             $meemCode = $body['data']['customer'] ?? null;
             $token    = $body['data']['token'] ?? null;
+
+            if($meemCode && $token){
+                $log_data = $body['data'];
+                Far_log::insert_userlog(1, 'api', 'auth', 'login' ,$log_data);
+            }
+
 
             if ($meemCode && $token) {
                 try {

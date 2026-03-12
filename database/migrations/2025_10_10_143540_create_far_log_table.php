@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('far_log', function (Blueprint $table) {
             $table->increments('log_id')->unique('log_id');
             $table->string('user_id', 200);
+            $table->string('meem_code', 200)->nullable();
             $table->string('log_type', 200)->nullable();
             $table->string('log_category', 200)->nullable();
             $table->string('trail_module', 200)->nullable();

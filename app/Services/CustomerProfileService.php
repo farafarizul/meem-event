@@ -26,7 +26,7 @@ class CustomerProfileService
             return;
         }
 
-        $user = User::query()->where('meem_id', $data['id'])->first();
+        $user = User::query()->where('meem_code', $data['cs_code'])->first();
         if(!$user) {
             //create new user
 
@@ -47,7 +47,6 @@ class CustomerProfileService
                 'fullname'        => $data['name'] ?? null,
                 'email'           => $data['email'] ?? null,
                 'phone_number'    => $data['contact_no'] ?? null,
-                'meem_code'       => $data['cs_code'] ?? null,
                 'profile_picture' => $data['profile_picture'] ?? null,
                 'updated_at'      => now(),
             ]);

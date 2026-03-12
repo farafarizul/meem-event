@@ -27,6 +27,18 @@ abstract class Far_log extends Model
         if($additional_log_data){
             $insert_data['log_data_json'] = json_encode($additional_log_data);
         }
+        //check $additional_log_data if has key 'meem_code' or 'customer', if yes, insert meem_code or customer to far_log table.
+        //convert $additional_log_data to array if it is an JSON string
+        $additional_log_data_array = [];
+        if(is_string($additional_log_data)){
+            $additional_log_data_array = json_decode($additional_log_data, true);
+        }
+
+        if(isset($additional_log_data_array['meem_code'])){
+            $insert_data['meem_code'] = $additional_log_data_array['meem_code'];
+        }elseif(isset($additional_log_data_array['customer'])){
+            $insert_data['meem_code'] = $additional_log_data_array['customer'];
+        }
         $log_id = DB::table('far_log')->insertGetId($insert_data);
         return $log_id;
     }
@@ -47,6 +59,16 @@ abstract class Far_log extends Model
         if($log_data_json){
             $insert_data['log_data_json'] = json_encode($log_data_json);
         }
+
+        //check $log_data_json_array if has key 'meem_code' or 'customer' or 'cs_code', if yes, insert meem_code or customer or cs to far_log table.
+        if(isset($log_data_json['meem_code'])){
+            $insert_data['meem_code'] = $log_data_json['meem_code'];
+        }elseif(isset($log_data_json['customer'])){
+            $insert_data['meem_code'] = $log_data_json['customer'];
+        }elseif (isset($log_data_json['cs_code'])){
+            $insert_data['meem_code'] = $log_data_json['cs_code'];
+        }
+
         $log_id = DB::table('far_log')->insertGetId($insert_data);
         return $log_id;
     }

@@ -25,8 +25,18 @@ class AuthService
         $user = User::query()->where('meem_code', $meemCode)->first();
 
         if (! $user) {
+
+            User::create([
+                'fullname'        => "-",
+                'email'           => "-",
+                'phone_number'    => "-",
+                'meem_code'       => $meemCode,
+                'meem_id'         => time(), // Use current timestamp as a placeholder meem_id
+                'profile_picture' => null,
+                'updated_at'      => now(),
+            ]);
+
             Log::warning('AuthLogin: no local user found for meem_code', ['meem_code' => $meemCode]);
-            return;
         }
 
         $user->update(['token' => $token]);
