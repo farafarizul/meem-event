@@ -57,10 +57,6 @@ class CustomerProfileController extends Controller
             "gold_value": 6.12
         }
          */
-        if($upstream->successful() && ($body['success'] ?? false) && isset($body['data'])) {
-            $log_data = $body['data'];
-            Far_log::insert_userlog(1, 'api', 'customer', 'profile' ,$log_data);
-        }
         if ($upstream->successful() && ($body['success'] ?? false) && isset($body['data'])) {
 
             $gold_progress_detail = Far_gold::gold_progress_detail($body['data']['gss_balance'] ?? 0);
@@ -82,6 +78,11 @@ class CustomerProfileController extends Controller
                 'gold_price' => $gold_value_detail['gold_price'],
                 'gold_value' => $gold_value_detail['gold_value'],
             ];
+        }
+
+        if($upstream->successful() && ($body['success'] ?? false) && isset($body['data']['gss_balance'])) {
+            $log_data = $body['data'];
+            Far_log::insert_userlog(1, 'api', 'customer', 'profile' ,$log_data);
         }
 
         if ($upstream->successful() && ($body['success'] ?? false) && isset($body['data'])) {
