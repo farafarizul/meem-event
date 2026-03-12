@@ -24,6 +24,7 @@ class User extends Authenticatable
         'is_admin',
         'status',
         'token',
+        'apps_login_status',
     ];
 
     protected $hidden = [
