@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\EventCheckinController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\GoldPriceController;
 use App\Http\Controllers\Admin\GoldPriceSyncSettingController;
+use App\Http\Controllers\Admin\SilverPriceController;
+use App\Http\Controllers\Admin\SilverPriceSyncSettingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Public\CheckinController;
 use Illuminate\Support\Facades\Route;
@@ -76,6 +78,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(
     // Gold Price Sync Settings
     Route::get('/settings/gold-price-sync', [GoldPriceSyncSettingController::class, 'index'])->name('gold-price.settings');
     Route::post('/settings/gold-price-sync', [GoldPriceSyncSettingController::class, 'update'])->name('gold-price.settings.update');
+
+    // Silver Price History
+    Route::get('/silver-price', [SilverPriceController::class, 'index'])->name('silver-price.index');
+    Route::get('/silver-price/datatable', [SilverPriceController::class, 'datatable'])->name('silver-price.datatable');
+    Route::post('/silver-price/sync-now', [SilverPriceController::class, 'syncNow'])->name('silver-price.sync-now');
+
+    // Silver Price Sync Settings
+    Route::get('/settings/silver-price-sync', [SilverPriceSyncSettingController::class, 'index'])->name('silver-price.settings');
+    Route::post('/settings/silver-price-sync', [SilverPriceSyncSettingController::class, 'update'])->name('silver-price.settings.update');
 });
 
 require __DIR__ . '/auth.php';
