@@ -104,6 +104,12 @@
                         <i class="bi bi-graph-up-arrow me-2"></i>Gold Price
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.silver-price.*') ? 'active' : '' }}"
+                       href="{{ route('admin.silver-price.index') }}">
+                        <i class="bi bi-coin me-2"></i>Silver Price
+                    </a>
+                </li>
             </ul>
         </nav>
 
