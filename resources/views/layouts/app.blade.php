@@ -1,158 +1,248 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="js">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Meem Event') }} - @yield('title', 'Admin')</title>
 
-    {{-- Bootstrap 5 CSS --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    {{-- Bootstrap Icons --}}
+    {{-- Dashlite CSS --}}
+    <link rel="stylesheet" href="{{ asset('dashlite/css/dashlite.css') }}">
+    <link id="skin-default" rel="stylesheet" href="{{ asset('dashlite/css/theme.css') }}">
+    {{-- Bootstrap Icons (used in page content) --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    {{-- DataTables + Bootstrap 5 CSS --}}
+    {{-- DataTables Bootstrap 5 CSS --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.min.css">
-
-    <style>
-        .sidebar { min-height: calc(100vh - 56px); }
-        .sidebar .nav-link { color: #495057; border-radius: 0.375rem; }
-        .sidebar .nav-link:hover { background-color: #e9ecef; }
-        .sidebar .nav-link.active { background-color: #212529; color: #fff !important; }
-        .sidebar .nav-link i { width: 1.2rem; }
-    </style>
 
     @stack('styles')
 </head>
-<body class="bg-light">
 
-{{-- Navbar --}}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="{{ route('admin.dashboard') }}">
-            <img src="{{ asset('assets/icons/logo-transparent-192x192.png') }}" style="width: 30px; height: 30px; object-fit: contain;" alt="Meem Logo">{{ config('app.name', 'Meem Event') }}
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto align-items-lg-center">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">
-                        <i class="bi bi-person-circle me-1"></i>{{ Auth::user()->fullname }}
+<body class="nk-body bg-lighter npc-general has-sidebar">
+<div class="nk-app-root">
+    <div class="nk-main">
+
+        {{-- ===== SIDEBAR ===== --}}
+        <div class="nk-sidebar nk-sidebar-fixed is-dark" data-content="sidebarMenu">
+            <div class="nk-sidebar-element nk-sidebar-head">
+                <div class="nk-menu-trigger">
+                    <a href="#" class="nk-nav-toggle nk-quick-nav-icon d-xl-none" data-target="sidebarMenu">
+                        <em class="icon ni ni-arrow-left"></em>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="dropdown-item text-danger">
-                                    <i class="bi bi-box-arrow-right me-1"></i>Logout
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+                    <a href="#" class="nk-nav-compact nk-quick-nav-icon d-none d-xl-inline-flex" data-target="sidebarMenu">
+                        <em class="icon ni ni-menu"></em>
+                    </a>
+                </div>
+                <div class="nk-sidebar-brand">
+                    <a href="{{ route('admin.dashboard') }}" class="logo-link nk-sidebar-logo">
+                        <img class="logo-light logo-img" src="{{ asset('assets/icons/logo-transparent-192x192.png') }}" alt="logo" style="max-height:32px;">
+                        <img class="logo-dark logo-img" src="{{ asset('assets/icons/logo-transparent-192x192.png') }}" alt="logo-dark" style="max-height:32px;">
+                        <span class="nio-version">{{ config('app.name', 'Meem Event') }}</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="nk-sidebar-element nk-sidebar-body">
+                <div class="nk-sidebar-content">
+                    <div class="nk-sidebar-menu" data-simplebar>
+                        <ul class="nk-menu">
+                            <li class="nk-menu-heading">
+                                <h6 class="overline-title text-primary-alt">Main Menu</h6>
+                            </li>
+                            <li class="nk-menu-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                                <a href="{{ route('admin.dashboard') }}" class="nk-menu-link">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-home-alt"></em></span>
+                                    <span class="nk-menu-text">Dashboard</span>
+                                </a>
+                            </li>
+                            <li class="nk-menu-item {{ request()->routeIs('admin.branches.*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.branches.index') }}" class="nk-menu-link">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-building"></em></span>
+                                    <span class="nk-menu-text">Branches</span>
+                                </a>
+                            </li>
+                            <li class="nk-menu-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.users.index') }}" class="nk-menu-link">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-users"></em></span>
+                                    <span class="nk-menu-text">Users</span>
+                                </a>
+                            </li>
+                            <li class="nk-menu-item {{ request()->routeIs('admin.events.*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.events.index') }}" class="nk-menu-link">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-calendar"></em></span>
+                                    <span class="nk-menu-text">Events</span>
+                                </a>
+                            </li>
+                            <li class="nk-menu-item {{ request()->routeIs('admin.checkins.*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.checkins.index') }}" class="nk-menu-link">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-check-circle"></em></span>
+                                    <span class="nk-menu-text">Check-ins</span>
+                                </a>
+                            </li>
+                            <li class="nk-menu-item {{ request()->routeIs('admin.logs.*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.logs.index') }}" class="nk-menu-link">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-activity-alt"></em></span>
+                                    <span class="nk-menu-text">Logs</span>
+                                </a>
+                            </li>
+                            <li class="nk-menu-heading">
+                                <h6 class="overline-title text-primary-alt">Price Management</h6>
+                            </li>
+                            <li class="nk-menu-item {{ request()->routeIs('admin.gold-price.*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.gold-price.index') }}" class="nk-menu-link">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-trend-up"></em></span>
+                                    <span class="nk-menu-text">Gold Price</span>
+                                </a>
+                            </li>
+                            <li class="nk-menu-item {{ request()->routeIs('admin.silver-price.*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.silver-price.index') }}" class="nk-menu-link">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-coins"></em></span>
+                                    <span class="nk-menu-text">Silver Price</span>
+                                </a>
+                            </li>
+                            <li class="nk-menu-heading">
+                                <h6 class="overline-title text-primary-alt">Settings</h6>
+                            </li>
+                            <li class="nk-menu-item {{ request()->routeIs('admin.apk-detail.*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.apk-detail.index') }}" class="nk-menu-link">
+                                    <span class="nk-menu-icon"><em class="icon ni ni-mobile"></em></span>
+                                    <span class="nk-menu-text">APK Management</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</nav>
+        {{-- ===== END SIDEBAR ===== --}}
 
-<div class="container-fluid">
-    <div class="row">
+        {{-- ===== MAIN CONTENT WRAPPER ===== --}}
+        <div class="nk-wrap">
 
-        {{-- Sidebar --}}
-        <nav class="col-md-2 d-none d-md-block bg-white sidebar py-3 border-end shadow-sm">
-            <ul class="nav flex-column gap-1">
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
-                       href="{{ route('admin.dashboard') }}">
-                        <i class="bi bi-speedometer2 me-2"></i>Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.branches.*') ? 'active' : '' }}"
-                       href="{{ route('admin.branches.index') }}">
-                        <i class="bi bi-diagram-3 me-2"></i>Branches
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}"
-                       href="{{ route('admin.users.index') }}">
-                        <i class="bi bi-people me-2"></i>Users
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.events.*') ? 'active' : '' }}"
-                       href="{{ route('admin.events.index') }}">
-                        <i class="bi bi-calendar2-event me-2"></i>Events
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.checkins.*') ? 'active' : '' }}"
-                       href="{{ route('admin.checkins.index') }}">
-                        <i class="bi bi-check2-circle me-2"></i>Check-ins
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.logs.*') ? 'active' : '' }}"
-                       href="{{ route('admin.logs.index') }}">
-                        <i class="bi bi-journal-text me-2"></i>Logs
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.gold-price.*') ? 'active' : '' }}"
-                       href="{{ route('admin.gold-price.index') }}">
-                        <i class="bi bi-graph-up-arrow me-2"></i>Gold Price
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.silver-price.*') ? 'active' : '' }}"
-                       href="{{ route('admin.silver-price.index') }}">
-                        <i class="bi bi-coin me-2"></i>Silver Price
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.apk-detail.*') ? 'active' : '' }}"
-                       href="{{ route('admin.apk-detail.index') }}">
-                        <i class="bi bi-android2 me-2"></i>APK Management
-                    </a>
-                </li>
-            </ul>
-        </nav>
+            {{-- Header --}}
+            <div class="nk-header nk-header-fixed is-light">
+                <div class="container-fluid">
+                    <div class="nk-header-wrap">
+                        <div class="nk-menu-trigger d-xl-none ms-n1">
+                            <a href="#" class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu">
+                                <em class="icon ni ni-menu"></em>
+                            </a>
+                        </div>
+                        <div class="nk-header-brand d-xl-none">
+                            <a href="{{ route('admin.dashboard') }}" class="logo-link">
+                                <img class="logo-light logo-img" src="{{ asset('assets/icons/logo-transparent-192x192.png') }}" alt="logo" style="max-height:30px;">
+                            </a>
+                        </div>
 
-        {{-- Main Content --}}
-        <main class="col-md-10 ms-sm-auto px-4 py-4">
-            @if (isset($header))
-                <h4 class="mb-3 fw-semibold">{{ $header }}</h4>
-                <hr class="mb-4">
-            @endif
-
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="bi bi-check-circle me-1"></i>{{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        <div class="nk-header-tools">
+                            <ul class="nk-quick-nav">
+                                <li class="dropdown user-dropdown">
+                                    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+                                        <div class="user-toggle">
+                                            <div class="user-avatar sm">
+                                                <em class="icon ni ni-user-alt"></em>
+                                            </div>
+                                            <div class="user-info d-none d-md-block">
+                                                <div class="user-status">Administrator</div>
+                                                <div class="user-name dropdown-indicator">{{ Auth::user()->fullname }}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-md dropdown-menu-end dropdown-menu-s1">
+                                        <div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
+                                            <div class="user-card">
+                                                <div class="user-avatar">
+                                                    <span>{{ strtoupper(substr(Auth::user()->fullname, 0, 2)) }}</span>
+                                                </div>
+                                                <div class="user-info">
+                                                    <span class="lead-text">{{ Auth::user()->fullname }}</span>
+                                                    <span class="sub-text">{{ Auth::user()->email }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-inner">
+                                            <ul class="link-list">
+                                                <li>
+                                                    <form method="POST" action="{{ route('logout') }}" id="logout-form">
+                                                        @csrf
+                                                    </form>
+                                                    <a href="#" onclick="document.getElementById('logout-form').submit(); return false;">
+                                                        <em class="icon ni ni-signout"></em><span>Sign out</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            @endif
+            </div>
+            {{-- End Header --}}
 
-            @if (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <i class="bi bi-exclamation-triangle me-1"></i>{{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            {{-- Page Content --}}
+            <div class="nk-content">
+                <div class="container-fluid">
+                    <div class="nk-content-inner">
+                        <div class="nk-content-body">
+
+                            @if (isset($header))
+                                <div class="nk-block-head nk-block-head-sm">
+                                    <div class="nk-block-between">
+                                        <div class="nk-block-head-content">
+                                            <h3 class="nk-block-title page-title">{{ $header }}</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if (session('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <em class="icon ni ni-check-circle me-1"></em>{{ session('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            @endif
+
+                            @if (session('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <em class="icon ni ni-alert-circle me-1"></em>{{ session('error') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            @endif
+
+                            {{ $slot }}
+
+                        </div>
+                    </div>
                 </div>
-            @endif
+            </div>
+            {{-- End Page Content --}}
 
-            {{ $slot }}
-        </main>
+            {{-- Footer --}}
+            <div class="nk-footer">
+                <div class="container-fluid">
+                    <div class="nk-footer-wrap">
+                        <div class="nk-footer-copyright">
+                            &copy; {{ date('Y') }} <strong>{{ config('app.name', 'Meem Event') }}</strong>. All Rights Reserved.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- End Footer --}}
+
+        </div>
+        {{-- ===== END MAIN CONTENT WRAPPER ===== --}}
 
     </div>
 </div>
 
-{{-- jQuery --}}
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-{{-- Bootstrap 5 JS Bundle --}}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-{{-- DataTables --}}
+{{-- Dashlite bundle (includes jQuery & Bootstrap) --}}
+<script src="{{ asset('dashlite/js/bundle.js') }}"></script>
+{{-- DataTables JS --}}
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.min.js"></script>
+{{-- Dashlite scripts (sidebar toggle, dropdowns, etc.) --}}
+<script src="{{ asset('dashlite/js/scripts.js') }}"></script>
 
 <script>
     // Global AJAX CSRF header

@@ -1,35 +1,43 @@
 <x-app-layout>
     <x-slot name="header">Users Management</x-slot>
 
-    <div class="card border-0 shadow-sm">
-        <div class="card-header bg-white d-flex justify-content-between align-items-center flex-wrap gap-2">
-            <h6 class="mb-0 fw-semibold"><i class="bi bi-people me-1"></i>All Users</h6>
-            <div class="d-flex gap-2">
-                <button id="btn-export-filtered" class="btn btn-sm btn-outline-secondary">
-                    <i class="bi bi-funnel me-1"></i>Export Filtered
-                </button>
-                <button id="btn-export-all" class="btn btn-sm btn-outline-success">
-                    <i class="bi bi-file-earmark-excel me-1"></i>Export All
-                </button>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table id="users-table" class="table table-hover align-middle w-100">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Photo</th>
-                            <th>Meem Code</th>
-                            <th>Meem ID</th>
-                            <th>Full Name</th>
-                            <th>Phone Number</th>
-                            <th>Email</th>
-                            <th>Registered</th>
-                            <th class="text-center">Actions</th>
-                        </tr>
-                    </thead>
-                </table>
+    <div class="nk-block">
+        <div class="card card-bordered">
+            <div class="card-inner-group">
+                <div class="card-inner">
+                    <div class="card-title-group">
+                        <div class="card-title">
+                            <h6 class="title"><em class="icon ni ni-users me-1"></em>All Users</h6>
+                        </div>
+                        <div class="card-tools d-flex gap-2">
+                            <button id="btn-export-filtered" class="btn btn-outline-secondary btn-sm">
+                                <em class="icon ni ni-filter me-1"></em>Export Filtered
+                            </button>
+                            <button id="btn-export-all" class="btn btn-outline-success btn-sm">
+                                <em class="icon ni ni-file-xls me-1"></em>Export All
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-inner p-0">
+                    <div class="table-responsive">
+                        <table id="users-table" class="table table-orders w-100">
+                            <thead class="tb-odr-head">
+                                <tr class="tb-odr-item">
+                                    <th>#</th>
+                                    <th>Photo</th>
+                                    <th>Meem Code</th>
+                                    <th>Meem ID</th>
+                                    <th>Full Name</th>
+                                    <th>Phone Number</th>
+                                    <th>Email</th>
+                                    <th>Registered</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -42,36 +50,46 @@
                     @csrf
                     <input type="hidden" id="edit-id">
                     <div class="modal-header">
-                        <h5 class="modal-title"><i class="bi bi-pencil me-1"></i>Edit User</h5>
+                        <h5 class="modal-title"><em class="icon ni ni-edit me-1"></em>Edit User</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         <div id="edit-errors" class="alert alert-danger d-none"></div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Meem Code <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="edit-meemcode" name="meem_code" required>
+                        <div class="form-group mb-3">
+                            <label class="form-label fw-bold">Meem Code <span class="text-danger">*</span></label>
+                            <div class="form-control-wrap">
+                                <input type="text" class="form-control" id="edit-meemcode" name="meem_code" required>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Meem ID</label>
-                            <input type="text" class="form-control" id="edit-meemid" name="meem_id">
+                        <div class="form-group mb-3">
+                            <label class="form-label fw-bold">Meem ID</label>
+                            <div class="form-control-wrap">
+                                <input type="text" class="form-control" id="edit-meemid" name="meem_id">
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="edit-fullname" name="fullname" required>
+                        <div class="form-group mb-3">
+                            <label class="form-label fw-bold">Full Name <span class="text-danger">*</span></label>
+                            <div class="form-control-wrap">
+                                <input type="text" class="form-control" id="edit-fullname" name="fullname" required>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Phone Number <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="edit-phone" name="phone_number" required>
+                        <div class="form-group mb-3">
+                            <label class="form-label fw-bold">Phone Number <span class="text-danger">*</span></label>
+                            <div class="form-control-wrap">
+                                <input type="text" class="form-control" id="edit-phone" name="phone_number" required>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Email</label>
-                            <input type="email" class="form-control" id="edit-email" name="email">
+                        <div class="form-group mb-3">
+                            <label class="form-label fw-bold">Email</label>
+                            <div class="form-control-wrap">
+                                <input type="email" class="form-control" id="edit-email" name="email">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-save me-1"></i>Save Changes
+                            <em class="icon ni ni-save me-1"></em>Save Changes
                         </button>
                     </div>
                 </form>
@@ -84,7 +102,7 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header border-0">
-                    <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle me-1"></i>Confirm Delete</h5>
+                    <h5 class="modal-title text-danger"><em class="icon ni ni-alert-circle me-1"></em>Confirm Delete</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -93,7 +111,7 @@
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-danger btn-sm" id="btn-confirm-delete">
-                        <i class="bi bi-trash me-1"></i>Delete
+                        <em class="icon ni ni-trash me-1"></em>Delete
                     </button>
                 </div>
             </div>

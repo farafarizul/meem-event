@@ -27,69 +27,75 @@
     @endpush
 
     {{-- Filters --}}
-    <div class="card border-0 shadow-sm mb-3">
-        <div class="card-body py-2">
-            <div class="d-flex align-items-center gap-3 flex-wrap">
-                <label class="form-label fw-semibold mb-0 text-nowrap">
-                    <i class="bi bi-funnel me-1"></i>Filters:
-                </label>
-                <select id="filter-meem-code" class="form-select form-select-sm select2-filter" style="min-width:170px;">
-                    <option value="">All Meem Codes</option>
-                    @foreach ($meemCodes as $code)
-                        <option value="{{ $code }}">{{ $code }}</option>
-                    @endforeach
-                </select>
+    <div class="nk-block">
+        <div class="card card-bordered mb-3">
+            <div class="card-inner py-2">
+                <div class="d-flex align-items-center gap-3 flex-wrap">
+                    <label class="form-label fw-bold mb-0 text-nowrap">
+                        <em class="icon ni ni-filter me-1"></em>Filters:
+                    </label>
+                    <select id="filter-meem-code" class="form-select form-select-sm select2-filter" style="min-width:170px;">
+                        <option value="">All Meem Codes</option>
+                        @foreach ($meemCodes as $code)
+                            <option value="{{ $code }}">{{ $code }}</option>
+                        @endforeach
+                    </select>
 
-                <select id="filter-module" class="form-select form-select-sm select2-filter" style="min-width:150px;">
-                    <option value="">All Modules</option>
-                    @foreach ($modules as $module)
-                        <option value="{{ $module }}">{{ $module }}</option>
-                    @endforeach
-                </select>
+                    <select id="filter-module" class="form-select form-select-sm select2-filter" style="min-width:150px;">
+                        <option value="">All Modules</option>
+                        @foreach ($modules as $module)
+                            <option value="{{ $module }}">{{ $module }}</option>
+                        @endforeach
+                    </select>
 
-                <select id="filter-method" class="form-select form-select-sm select2-filter" style="min-width:150px;">
-                    <option value="">All Methods</option>
-                    @foreach ($methods as $method)
-                        <option value="{{ $method }}">{{ $method }}</option>
-                    @endforeach
-                </select>
+                    <select id="filter-method" class="form-select form-select-sm select2-filter" style="min-width:150px;">
+                        <option value="">All Methods</option>
+                        @foreach ($methods as $method)
+                            <option value="{{ $method }}">{{ $method }}</option>
+                        @endforeach
+                    </select>
 
-                <select id="filter-operation" class="form-select form-select-sm select2-filter" style="min-width:160px;">
-                    <option value="">All Operations</option>
-                    @foreach ($operations as $op)
-                        <option value="{{ $op }}">{{ $op }}</option>
-                    @endforeach
-                </select>
+                    <select id="filter-operation" class="form-select form-select-sm select2-filter" style="min-width:160px;">
+                        <option value="">All Operations</option>
+                        @foreach ($operations as $op)
+                            <option value="{{ $op }}">{{ $op }}</option>
+                        @endforeach
+                    </select>
 
-                <button id="btn-reset-filters" class="btn btn-sm btn-outline-secondary">
-                    <i class="bi bi-x-circle me-1"></i>Reset
-                </button>
+                    <button id="btn-reset-filters" class="btn btn-outline-secondary btn-sm">
+                        <em class="icon ni ni-cross-circle me-1"></em>Reset
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
 
-    {{-- DataTable --}}
-    <div class="card border-0 shadow-sm">
-        <div class="card-header bg-white">
-            <h6 class="mb-0 fw-semibold"><i class="bi bi-journal-text me-1"></i>Activity Logs</h6>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table id="logs-table" class="table table-hover align-middle w-100">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Meem Code</th>
-                            <th>Full Name</th>
-                            <th>Category</th>
-                            <th>Module</th>
-                            <th>Method</th>
-                            <th>Operation</th>
-                            <th>JSON Data</th>
-                            <th>Date / Time</th>
-                        </tr>
-                    </thead>
-                </table>
+        {{-- DataTable --}}
+        <div class="card card-bordered">
+            <div class="card-inner-group">
+                <div class="card-inner">
+                    <div class="card-title">
+                        <h6 class="title"><em class="icon ni ni-activity-alt me-1"></em>Activity Logs</h6>
+                    </div>
+                </div>
+                <div class="card-inner p-0">
+                    <div class="table-responsive">
+                        <table id="logs-table" class="table table-orders w-100">
+                            <thead class="tb-odr-head">
+                                <tr class="tb-odr-item">
+                                    <th>#</th>
+                                    <th>Meem Code</th>
+                                    <th>Full Name</th>
+                                    <th>Category</th>
+                                    <th>Module</th>
+                                    <th>Method</th>
+                                    <th>Operation</th>
+                                    <th>JSON Data</th>
+                                    <th>Date / Time</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -99,7 +105,7 @@
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-braces me-1"></i>JSON Data</h5>
+                    <h5 class="modal-title"><em class="icon ni ni-code me-1"></em>JSON Data</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -126,7 +132,6 @@
         // ── JSON pretty-printer ────────────────────────────────────
         function syntaxHighlight(json) {
             json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            // Match JSON strings (including object keys), booleans, nulls, and numbers
             return json.replace(
                 /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
                 function (match) {
@@ -161,13 +166,13 @@
             columns: [
                 { data: 'DT_RowIndex',     name: 'DT_RowIndex', orderable: false, searchable: false, width: '50px' },
                 { data: 'meem_code',       name: 'far_log.meem_code' },
-                { data: 'fullname',        name: 'users.fullname', defaultContent: '<span class="text-muted">—</span>' },
-                { data: 'log_category',    name: 'far_log.log_category', defaultContent: '—' },
-                { data: 'trail_module',    name: 'far_log.trail_module', defaultContent: '—' },
-                { data: 'trail_method',    name: 'far_log.trail_method', defaultContent: '—' },
-                { data: 'trail_operation', name: 'far_log.trail_operation', defaultContent: '—' },
+                { data: 'fullname',        name: 'users.fullname', defaultContent: '<span class="text-soft">&mdash;</span>' },
+                { data: 'log_category',    name: 'far_log.log_category', defaultContent: '&mdash;' },
+                { data: 'trail_module',    name: 'far_log.trail_module', defaultContent: '&mdash;' },
+                { data: 'trail_method',    name: 'far_log.trail_method', defaultContent: '&mdash;' },
+                { data: 'trail_operation', name: 'far_log.trail_operation', defaultContent: '&mdash;' },
                 { data: 'json_preview',    name: 'far_log.log_data_json', orderable: false, searchable: false },
-                { data: 'create_dttm',     name: 'far_log.create_dttm', defaultContent: '—' }
+                { data: 'create_dttm',     name: 'far_log.create_dttm', defaultContent: '&mdash;' }
             ],
             order: [[8, 'desc']],
             pageLength: 25,

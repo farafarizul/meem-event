@@ -2,68 +2,90 @@
     <x-slot name="header">Dashboard</x-slot>
 
     {{-- Stats Cards --}}
-    <div class="row g-3 mb-4">
-        <div class="col-xl-2 col-md-4 col-sm-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body d-flex align-items-center gap-3">
-                    <div class="rounded-circle bg-primary bg-opacity-10 p-3">
-                        <i class="bi bi-people fs-4 text-primary"></i>
-                    </div>
-                    <div>
-                        <div class="fs-4 fw-bold">{{ number_format($stats['total_users']) }}</div>
-                        <div class="text-muted small">Total Users</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-2 col-md-4 col-sm-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body d-flex align-items-center gap-3">
-                    <div class="rounded-circle bg-success bg-opacity-10 p-3">
-                        <i class="bi bi-calendar2-event fs-4 text-success"></i>
-                    </div>
-                    <div>
-                        <div class="fs-4 fw-bold">{{ number_format($stats['total_events']) }}</div>
-                        <div class="text-muted small">Total Events</div>
+    <div class="nk-block nk-block-lg">
+        <div class="row g-gs">
+            <div class="col-xxl-4 col-sm-6">
+                <div class="card card-bordered">
+                    <div class="card-inner">
+                        <div class="card-title-group align-start mb-0">
+                            <div class="card-title">
+                                <h6 class="subtitle">Total Users</h6>
+                            </div>
+                            <div class="card-tools">
+                                <em class="card-hint-icon icon ni ni-users text-primary" style="font-size:1.5rem;"></em>
+                            </div>
+                        </div>
+                        <div class="card-amount">
+                            <span class="amount">{{ number_format($stats['total_users']) }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-2 col-md-4 col-sm-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body d-flex align-items-center gap-3">
-                    <div class="rounded-circle bg-warning bg-opacity-10 p-3">
-                        <i class="bi bi-check2-circle fs-4 text-warning"></i>
-                    </div>
-                    <div>
-                        <div class="fs-4 fw-bold">{{ number_format($stats['total_checkins']) }}</div>
-                        <div class="text-muted small">Total Check-ins</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-4 col-sm-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body d-flex align-items-center gap-3">
-                    <div class="rounded-circle bg-info bg-opacity-10 p-3">
-                        <i class="bi bi-wifi fs-4 text-info"></i>
-                    </div>
-                    <div>
-                        <div class="fs-4 fw-bold">{{ number_format($stats['total_online_events']) }}</div>
-                        <div class="text-muted small">Online Events</div>
+            <div class="col-xxl-4 col-sm-6">
+                <div class="card card-bordered">
+                    <div class="card-inner">
+                        <div class="card-title-group align-start mb-0">
+                            <div class="card-title">
+                                <h6 class="subtitle">Total Events</h6>
+                            </div>
+                            <div class="card-tools">
+                                <em class="card-hint-icon icon ni ni-calendar text-success" style="font-size:1.5rem;"></em>
+                            </div>
+                        </div>
+                        <div class="card-amount">
+                            <span class="amount">{{ number_format($stats['total_events']) }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-3 col-md-4 col-sm-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body d-flex align-items-center gap-3">
-                    <div class="rounded-circle bg-danger bg-opacity-10 p-3">
-                        <i class="bi bi-geo-alt fs-4 text-danger"></i>
+            <div class="col-xxl-4 col-sm-6">
+                <div class="card card-bordered">
+                    <div class="card-inner">
+                        <div class="card-title-group align-start mb-0">
+                            <div class="card-title">
+                                <h6 class="subtitle">Total Check-ins</h6>
+                            </div>
+                            <div class="card-tools">
+                                <em class="card-hint-icon icon ni ni-check-circle text-warning" style="font-size:1.5rem;"></em>
+                            </div>
+                        </div>
+                        <div class="card-amount">
+                            <span class="amount">{{ number_format($stats['total_checkins']) }}</span>
+                        </div>
                     </div>
-                    <div>
-                        <div class="fs-4 fw-bold">{{ number_format($stats['total_onsite_events']) }}</div>
-                        <div class="text-muted small">Onsite Events</div>
+                </div>
+            </div>
+            <div class="col-xxl-4 col-sm-6">
+                <div class="card card-bordered">
+                    <div class="card-inner">
+                        <div class="card-title-group align-start mb-0">
+                            <div class="card-title">
+                                <h6 class="subtitle">Online Events</h6>
+                            </div>
+                            <div class="card-tools">
+                                <em class="card-hint-icon icon ni ni-wifi text-info" style="font-size:1.5rem;"></em>
+                            </div>
+                        </div>
+                        <div class="card-amount">
+                            <span class="amount">{{ number_format($stats['total_online_events']) }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-4 col-sm-6">
+                <div class="card card-bordered">
+                    <div class="card-inner">
+                        <div class="card-title-group align-start mb-0">
+                            <div class="card-title">
+                                <h6 class="subtitle">Onsite Events</h6>
+                            </div>
+                            <div class="card-tools">
+                                <em class="card-hint-icon icon ni ni-map-pin text-danger" style="font-size:1.5rem;"></em>
+                            </div>
+                        </div>
+                        <div class="card-amount">
+                            <span class="amount">{{ number_format($stats['total_onsite_events']) }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -71,59 +93,72 @@
     </div>
 
     {{-- Welcome + Recent Check-ins --}}
-    <div class="row g-3">
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body">
-                    <h6 class="card-title text-muted text-uppercase small fw-semibold">Administrator</h6>
-                    <h5 class="mb-1">{{ Auth::user()->fullname }}</h5>
-                    <p class="text-muted small mb-0">{{ Auth::user()->meem_code }}</p>
-                    <hr>
-                    <div class="d-grid gap-2">
-                        <a href="{{ route('admin.users.index') }}" class="btn btn-outline-primary btn-sm">
-                            <i class="bi bi-people me-1"></i>Manage Users
-                        </a>
-                        <a href="{{ route('admin.events.index') }}" class="btn btn-outline-success btn-sm">
-                            <i class="bi bi-calendar2-event me-1"></i>Manage Events
-                        </a>
-                        <a href="{{ route('admin.checkins.index') }}" class="btn btn-outline-warning btn-sm">
-                            <i class="bi bi-check2-circle me-1"></i>View Check-ins
-                        </a>
+    <div class="nk-block">
+        <div class="row g-gs">
+            <div class="col-md-4">
+                <div class="card card-bordered h-100">
+                    <div class="card-inner">
+                        <div class="card-title-group mb-3">
+                            <div class="card-title">
+                                <h6 class="title">Administrator</h6>
+                            </div>
+                        </div>
+                        <h5 class="mb-1">{{ Auth::user()->fullname }}</h5>
+                        <p class="text-soft mb-3">{{ Auth::user()->meem_code }}</p>
+                        <div class="d-flex flex-column gap-2">
+                            <a href="{{ route('admin.users.index') }}" class="btn btn-outline-primary btn-sm">
+                                <em class="icon ni ni-users me-1"></em>Manage Users
+                            </a>
+                            <a href="{{ route('admin.events.index') }}" class="btn btn-outline-success btn-sm">
+                                <em class="icon ni ni-calendar me-1"></em>Manage Events
+                            </a>
+                            <a href="{{ route('admin.checkins.index') }}" class="btn btn-outline-warning btn-sm">
+                                <em class="icon ni ni-check-circle me-1"></em>View Check-ins
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-8">
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-white border-bottom">
-                    <h6 class="mb-0 fw-semibold"><i class="bi bi-clock-history me-1"></i>Recent Check-ins</h6>
-                </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-sm table-hover mb-0">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>User</th>
-                                    <th>Meem Code</th>
-                                    <th>Event</th>
-                                    <th>Checked In At</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($recent_checkins as $checkin)
-                                    <tr>
-                                        <td>{{ $checkin->user?->fullname ?? '-' }}</td>
-                                        <td><span class="badge bg-secondary">{{ $checkin->user?->meem_code ?? '-' }}</span></td>
-                                        <td>{{ $checkin->event?->event_name ?? '-' }}</td>
-                                        <td class="text-muted small">{{ $checkin->checked_in_at->format('d M Y H:i') }}</td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="4" class="text-center text-muted py-3">No check-ins yet.</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+            <div class="col-md-8">
+                <div class="card card-bordered">
+                    <div class="card-inner-group">
+                        <div class="card-inner">
+                            <div class="card-title-group">
+                                <div class="card-title">
+                                    <h6 class="title"><em class="icon ni ni-clock me-1"></em>Recent Check-ins</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-inner p-0">
+                            <div class="table-responsive">
+                                <table class="table table-orders">
+                                    <thead class="tb-odr-head">
+                                        <tr class="tb-odr-item">
+                                            <th class="tb-odr-info"><span class="tb-odr-desc d-none d-sm-inline-block">User</span></th>
+                                            <th class="tb-odr-info"><span>Meem Code</span></th>
+                                            <th class="tb-odr-info"><span class="d-none d-md-inline-block">Event</span></th>
+                                            <th class="tb-odr-info"><span class="d-none d-md-inline-block">Checked In At</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tb-odr-body">
+                                        @forelse ($recent_checkins as $checkin)
+                                            <tr class="tb-odr-item">
+                                                <td class="tb-odr-info">{{ $checkin->user?->fullname ?? '-' }}</td>
+                                                <td class="tb-odr-info">
+                                                    <span class="badge badge-sm bg-outline-secondary">{{ $checkin->user?->meem_code ?? '-' }}</span>
+                                                </td>
+                                                <td class="tb-odr-info d-none d-md-table-cell">{{ $checkin->event?->event_name ?? '-' }}</td>
+                                                <td class="tb-odr-info d-none d-md-table-cell text-soft">{{ $checkin->checked_in_at->format('d M Y H:i') }}</td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="4" class="text-center text-soft py-3">No check-ins yet.</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

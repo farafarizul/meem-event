@@ -1,57 +1,75 @@
 <x-app-layout>
     <x-slot name="header">Silver Price History</x-slot>
 
-    {{-- Latest Price Summary Card --}}
+    {{-- Latest Price Summary Cards --}}
     @if ($latest)
-    <div class="row g-3 mb-4">
-        <div class="col-md-3 col-sm-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body d-flex align-items-center gap-3">
-                    <div class="rounded-circle bg-secondary bg-opacity-10 p-3">
-                        <i class="bi bi-currency-dollar fs-4 text-secondary"></i>
-                    </div>
-                    <div>
-                        <div class="fs-4 fw-bold text-success">MYR {{ number_format($latest->sell_price, 2) }}</div>
-                        <div class="text-muted small">Sell Price / gram</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body d-flex align-items-center gap-3">
-                    <div class="rounded-circle bg-info bg-opacity-10 p-3">
-                        <i class="bi bi-cash-coin fs-4 text-info"></i>
-                    </div>
-                    <div>
-                        <div class="fs-4 fw-bold text-info">MYR {{ number_format($latest->buy_price, 2) }}</div>
-                        <div class="text-muted small">Buy Price / gram</div>
+    <div class="nk-block nk-block-lg">
+        <div class="row g-gs">
+            <div class="col-md-3 col-sm-6">
+                <div class="card card-bordered">
+                    <div class="card-inner">
+                        <div class="card-title-group align-start mb-0">
+                            <div class="card-title">
+                                <h6 class="subtitle">Sell Price / gram</h6>
+                            </div>
+                            <div class="card-tools">
+                                <em class="icon ni ni-sign-myr text-secondary" style="font-size:1.5rem;"></em>
+                            </div>
+                        </div>
+                        <div class="card-amount">
+                            <span class="amount text-success">MYR {{ number_format($latest->sell_price, 2) }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body d-flex align-items-center gap-3">
-                    <div class="rounded-circle bg-secondary bg-opacity-10 p-3">
-                        <i class="bi bi-clock-history fs-4 text-secondary"></i>
-                    </div>
-                    <div>
-                        <div class="fw-bold">{{ $latest->last_updated->format('d M Y H:i') }}</div>
-                        <div class="text-muted small">API Last Updated</div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card card-bordered">
+                    <div class="card-inner">
+                        <div class="card-title-group align-start mb-0">
+                            <div class="card-title">
+                                <h6 class="subtitle">Buy Price / gram</h6>
+                            </div>
+                            <div class="card-tools">
+                                <em class="icon ni ni-sign-myr text-info" style="font-size:1.5rem;"></em>
+                            </div>
+                        </div>
+                        <div class="card-amount">
+                            <span class="amount text-info">MYR {{ number_format($latest->buy_price, 2) }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body d-flex align-items-center gap-3">
-                    <div class="rounded-circle bg-primary bg-opacity-10 p-3">
-                        <i class="bi bi-database-check fs-4 text-primary"></i>
+            <div class="col-md-3 col-sm-6">
+                <div class="card card-bordered">
+                    <div class="card-inner">
+                        <div class="card-title-group align-start mb-0">
+                            <div class="card-title">
+                                <h6 class="subtitle">API Last Updated</h6>
+                            </div>
+                            <div class="card-tools">
+                                <em class="icon ni ni-clock text-secondary" style="font-size:1.5rem;"></em>
+                            </div>
+                        </div>
+                        <div class="card-amount">
+                            <span class="amount fs-6">{{ $latest->last_updated->format('d M Y H:i') }}</span>
+                        </div>
                     </div>
-                    <div>
-                        <div class="fw-bold">{{ $latest->created_at->format('d M Y H:i') }}</div>
-                        <div class="text-muted small">Synced At</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card card-bordered">
+                    <div class="card-inner">
+                        <div class="card-title-group align-start mb-0">
+                            <div class="card-title">
+                                <h6 class="subtitle">Synced At</h6>
+                            </div>
+                            <div class="card-tools">
+                                <em class="icon ni ni-server text-primary" style="font-size:1.5rem;"></em>
+                            </div>
+                        </div>
+                        <div class="card-amount">
+                            <span class="amount fs-6">{{ $latest->created_at->format('d M Y H:i') }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -59,35 +77,45 @@
     </div>
     @endif
 
-    <div class="card border-0 shadow-sm">
-        <div class="card-header bg-white d-flex justify-content-between align-items-center flex-wrap gap-2">
-            <h6 class="mb-0 fw-semibold"><i class="bi bi-graph-up-arrow me-1"></i>All Silver Price Records</h6>
-            <form method="POST" action="{{ route('admin.silver-price.sync-now') }}">
-                @csrf
-                <button type="submit" class="btn btn-sm btn-success">
-                    <i class="bi bi-arrow-repeat me-1"></i>Run Sync Now
-                </button>
-            </form>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table id="silver-price-table" class="table table-hover align-middle w-100">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>ID</th>
-                            <th>Type</th>
-                            <th>Product</th>
-                            <th>Unit</th>
-                            <th>Currency</th>
-                            <th>Sell Price</th>
-                            <th>Buy Price</th>
-                            <th>Timezone</th>
-                            <th>API Last Updated</th>
-                            <th>Synced At</th>
-                        </tr>
-                    </thead>
-                </table>
+    <div class="nk-block">
+        <div class="card card-bordered">
+            <div class="card-inner-group">
+                <div class="card-inner">
+                    <div class="card-title-group">
+                        <div class="card-title">
+                            <h6 class="title"><em class="icon ni ni-coins me-1"></em>All Silver Price Records</h6>
+                        </div>
+                        <div class="card-tools">
+                            <form method="POST" action="{{ route('admin.silver-price.sync-now') }}">
+                                @csrf
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <em class="icon ni ni-reload me-1"></em>Run Sync Now
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-inner p-0">
+                    <div class="table-responsive">
+                        <table id="silver-price-table" class="table table-orders w-100">
+                            <thead class="tb-odr-head">
+                                <tr class="tb-odr-item">
+                                    <th>#</th>
+                                    <th>ID</th>
+                                    <th>Type</th>
+                                    <th>Product</th>
+                                    <th>Unit</th>
+                                    <th>Currency</th>
+                                    <th>Sell Price</th>
+                                    <th>Buy Price</th>
+                                    <th>Timezone</th>
+                                    <th>API Last Updated</th>
+                                    <th>Synced At</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

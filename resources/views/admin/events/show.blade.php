@@ -1,123 +1,144 @@
 <x-app-layout>
     <x-slot name="header">Event Detail</x-slot>
 
-    <div class="row g-4">
+    <div class="nk-block">
+        <div class="row g-gs">
 
-        {{-- Left column: event info + QR code --}}
-        <div class="col-md-4">
+            {{-- Left column: event info + QR code --}}
+            <div class="col-md-4">
 
-            {{-- Event Info Card --}}
-            <div class="card border-0 shadow-sm mb-4">
-                <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0 fw-semibold"><i class="bi bi-calendar2-event me-1"></i>Event Info</h6>
-                    <span class="badge bg-{{ $event->category_event === 'online' ? 'info' : 'success' }}">
-                        {{ ucfirst($event->category_event) }}
-                    </span>
+                {{-- Event Info Card --}}
+                <div class="card card-bordered mb-3">
+                    <div class="card-inner-group">
+                        <div class="card-inner">
+                            <div class="card-title-group">
+                                <div class="card-title">
+                                    <h6 class="title"><em class="icon ni ni-calendar me-1"></em>Event Info</h6>
+                                </div>
+                                <div class="card-tools">
+                                    <span class="badge bg-{{ $event->category_event === 'online' ? 'info' : 'success' }}">
+                                        {{ ucfirst($event->category_event) }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-inner">
+                            <h5 class="fw-bold mb-3">{{ $event->event_name }}</h5>
+
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item px-0 py-2 d-flex gap-2">
+                                    <em class="icon ni ni-map-pin text-soft mt-1 flex-shrink-0"></em>
+                                    <span>{{ $event->location }}</span>
+                                </li>
+                                <li class="list-group-item px-0 py-2 d-flex gap-2">
+                                    <em class="icon ni ni-calendar-range text-soft mt-1 flex-shrink-0"></em>
+                                    <span>
+                                        {{ $event->start_date->format('d M Y') }}
+                                        @if (!$event->start_date->eq($event->end_date))
+                                            &mdash; {{ $event->end_date->format('d M Y') }}
+                                        @endif
+                                    </span>
+                                </li>
+                                <li class="list-group-item px-0 py-2 d-flex gap-2">
+                                    <em class="icon ni ni-key text-soft mt-1 flex-shrink-0"></em>
+                                    <span class="font-monospace text-soft small">{{ $event->unique_identifier }}</span>
+                                </li>
+                                @if ($event->branch)
+                                <li class="list-group-item px-0 py-2 d-flex gap-2">
+                                    <em class="icon ni ni-building text-soft mt-1 flex-shrink-0"></em>
+                                    <span>{{ $event->branch->branch_name }}</span>
+                                </li>
+                                @endif
+                            </ul>
+
+                            <div class="mt-3 d-flex flex-wrap gap-2">
+                                <a href="{{ route('admin.events.edit', $event) }}" class="btn btn-warning btn-sm">
+                                    <em class="icon ni ni-edit me-1"></em>Edit
+                                </a>
+                                <a href="{{ route('admin.events.index') }}" class="btn btn-secondary btn-sm">
+                                    <em class="icon ni ni-arrow-left me-1"></em>Back
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <h5 class="fw-bold mb-3">{{ $event->event_name }}</h5>
 
-                    <div class="mb-2 d-flex gap-2">
-                        <i class="bi bi-geo-alt text-muted mt-1 flex-shrink-0"></i>
-                        <span>{{ $event->location }}</span>
-                    </div>
-                    <div class="mb-2 d-flex gap-2">
-                        <i class="bi bi-calendar-range text-muted mt-1 flex-shrink-0"></i>
-                        <span>
-                            {{ $event->start_date->format('d M Y') }}
-                            @if (!$event->start_date->eq($event->end_date))
-                                &mdash; {{ $event->end_date->format('d M Y') }}
-                            @endif
-                        </span>
-                    </div>
-                    <div class="mb-3 d-flex gap-2">
-                        <i class="bi bi-key text-muted mt-1 flex-shrink-0"></i>
-                        <span class="font-monospace text-muted small">{{ $event->unique_identifier }}</span>
-                    </div>
+                {{-- QR Code Card --}}
+                <div class="card card-bordered">
+                    <div class="card-inner-group">
+                        <div class="card-inner">
+                            <div class="card-title">
+                                <h6 class="title"><em class="icon ni ni-qr me-1"></em>Check-in QR Code</h6>
+                            </div>
+                        </div>
+                        <div class="card-inner text-center">
+                            <p class="text-soft small mb-3">
+                                Scan this QR code to open the public check-in page for this event.
+                            </p>
 
-                    @if ($event->branch)
-                    <div class="mb-3 d-flex gap-2">
-                        <i class="bi bi-diagram-3 text-muted mt-1 flex-shrink-0"></i>
-                        <span>{{ $event->branch->branch_name }}</span>
-                    </div>
-                    @endif
+                            {{-- SVG QR display --}}
+                            <div class="d-inline-block border rounded p-2 bg-white mb-3" id="qr-container">
+                                {!! $qrSvg !!}
+                            </div>
 
-                    <div class="d-flex flex-wrap gap-2">
-                        <a href="{{ route('admin.events.edit', $event) }}" class="btn btn-sm btn-warning">
-                            <i class="bi bi-pencil-fill me-1"></i>Edit
-                        </a>
-                        <a href="{{ route('admin.events.index') }}" class="btn btn-sm btn-secondary">
-                            <i class="bi bi-arrow-left me-1"></i>Back
-                        </a>
+                            <p class="text-soft small mb-3 text-break">
+                                <em class="icon ni ni-link me-1"></em>
+                                <a href="{{ $checkinUrl }}" target="_blank" class="text-soft">{{ $checkinUrl }}</a>
+                            </p>
+
+                            <a href="{{ route('admin.events.qr-download', $event) }}"
+                               class="btn btn-primary w-100">
+                                <em class="icon ni ni-download me-2"></em>Download High-Res PNG (1200px)
+                            </a>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
-            {{-- QR Code Card --}}
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-white">
-                    <h6 class="mb-0 fw-semibold"><i class="bi bi-qr-code me-1"></i>Check-in QR Code</h6>
-                </div>
-                <div class="card-body text-center">
-                    <p class="text-muted small mb-3">
-                        Scan this QR code to open the public check-in page for this event.
-                    </p>
-
-                    {{-- SVG QR display --}}
-                    <div class="d-inline-block border rounded p-2 bg-white mb-3" id="qr-container">
-                        {!! $qrSvg !!}
+            {{-- Right column: check-in records --}}
+            <div class="col-md-8">
+                <div class="card card-bordered">
+                    <div class="card-inner-group">
+                        <div class="card-inner">
+                            <div class="card-title-group">
+                                <div class="card-title">
+                                    <h6 class="title">
+                                        <em class="icon ni ni-check-circle me-1"></em>Check-in Records
+                                        <span class="badge bg-secondary ms-1" id="checkin-count">&ndash;</span>
+                                    </h6>
+                                </div>
+                                <div class="card-tools d-flex gap-2">
+                                    <button id="btn-export-filtered" class="btn btn-outline-secondary btn-sm">
+                                        <em class="icon ni ni-filter me-1"></em>Export Filtered
+                                    </button>
+                                    <button id="btn-export-all" class="btn btn-outline-success btn-sm">
+                                        <em class="icon ni ni-file-xls me-1"></em>Export All
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-inner p-0">
+                            <div class="table-responsive">
+                                <table id="checkins-table" class="table table-orders w-100">
+                                    <thead class="tb-odr-head">
+                                        <tr class="tb-odr-item">
+                                            <th>#</th>
+                                            <th>Meem Code</th>
+                                            <th>Full Name</th>
+                                            <th>Phone</th>
+                                            <th>Checked In At</th>
+                                            <th class="text-center">Actions</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-
-                    <p class="text-muted small mb-3 text-break">
-                        <i class="bi bi-link-45deg me-1"></i>
-                        <a href="{{ $checkinUrl }}" target="_blank" class="text-muted">{{ $checkinUrl }}</a>
-                    </p>
-
-                    <a href="{{ route('admin.events.qr-download', $event) }}"
-                       class="btn btn-primary w-100">
-                        <i class="bi bi-download me-2"></i>Download High-Res PNG (1200px)
-                    </a>
                 </div>
             </div>
 
         </div>
-
-        {{-- Right column: check-in records --}}
-        <div class="col-md-8">
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-white d-flex justify-content-between align-items-center flex-wrap gap-2">
-                    <h6 class="mb-0 fw-semibold">
-                        <i class="bi bi-check2-circle me-1"></i>Check-in Records
-                        <span class="badge bg-secondary ms-1" id="checkin-count">–</span>
-                    </h6>
-                    <div class="d-flex gap-2">
-                        <button id="btn-export-filtered" class="btn btn-sm btn-outline-secondary">
-                            <i class="bi bi-funnel me-1"></i>Export Filtered
-                        </button>
-                        <button id="btn-export-all" class="btn btn-sm btn-outline-success">
-                            <i class="bi bi-file-earmark-excel me-1"></i>Export All
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="checkins-table" class="table table-hover align-middle w-100">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Meem Code</th>
-                                    <th>Full Name</th>
-                                    <th>Phone</th>
-                                    <th>Checked In At</th>
-                                    <th class="text-center">Actions</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 
     {{-- Delete Confirm Modal --}}
@@ -126,7 +147,7 @@
             <div class="modal-content">
                 <div class="modal-header border-0">
                     <h5 class="modal-title text-danger">
-                        <i class="bi bi-exclamation-triangle me-1"></i>Confirm Delete
+                        <em class="icon ni ni-alert-circle me-1"></em>Confirm Delete
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
@@ -136,7 +157,7 @@
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-danger btn-sm" id="btn-confirm-delete">
-                        <i class="bi bi-trash me-1"></i>Delete
+                        <em class="icon ni ni-trash me-1"></em>Delete
                     </button>
                 </div>
             </div>
