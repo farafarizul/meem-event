@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Libraries\Far_log;
+use App\Libraries\Far_gold;
 
 class CustomerProfileController extends Controller
 {
@@ -61,27 +62,24 @@ class CustomerProfileController extends Controller
             Far_log::insert_userlog(1, 'api', 'customer', 'profile' ,$log_data);
         }
         if ($upstream->successful() && ($body['success'] ?? false) && isset($body['data'])) {
-            $balance = $body['data']['gss_balance'] ?? 0;
-            $threshold = 0.01;
-            $progressValue = max(0, min($balance, $threshold));
-            $progressPercentage = ($threshold > 0) ? ($progressValue / $threshold) * 100 : 0;
-            $progressBarPercentage = ($threshold > 0) ? ($progressValue / $threshold) : 0;
+
+            $gold_progress_detail = Far_gold::gold_progress_detail($body['data']['gss_balance'] ?? 0);
             $goldPrice = 651; // This should ideally come from a reliable source or config
-            $gssGoldValue = $balance * $goldPrice;
+
 
             $body['data']['gss_progress'] = [
-                'balance' => $balance,
-                'threshold' => $threshold,
-                'progress_value' => round($progressValue, 4),
-                'progress_percentage' => round($progressPercentage, 2),
-                'progress_bar_percentage' => round($progressBarPercentage, 4),
+                'balance' => $gold_progress_detail['balance'],
+                'threshold' => $gold_progress_detail['threshold'],
+                'progress_value' => $gold_progress_detail['progress_value'],
+                'progress_percentage' => $gold_progress_detail['progress_percentage'],
+                'progress_bar_percentage' => $gold_progress_detail['progress_bar_percentage'],
             ];
             $body['data']['gold_price'] = $goldPrice;
-            $body['data']['gss_gold_value'] = round($gssGoldValue, 2);
+            $body['data']['gss_gold_value'] = 0;
             $body['data']['gss_detail'] = [
-                'balance' => round($balance, 4),
+                'balance' => round($body['data']['gss_balance'], 4),
                 'gold_price' => $goldPrice,
-                'gold_value' => round($gssGoldValue, 2),
+                'gold_value' => round(0, 2),
             ];
         }
 
