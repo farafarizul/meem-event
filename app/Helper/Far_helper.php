@@ -8,7 +8,7 @@ class Far_helper
     public static function decimal_one($number){
         return bcdiv($number, 1, 1);
     }
-    function truncate_decimal($val, $precision = 2) {
+    public static function truncate_decimal($val, $precision = 2) {
         $parts = explode('.', (string)$val);
         if (count($parts) < 2) return $val; // No decimal point found
 

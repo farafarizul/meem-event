@@ -5,7 +5,7 @@ use http\Env\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Helpers\Far_helper;
+use App\Helper\Far_helper;
 abstract class Far_gold extends Model
 {
     /**
@@ -84,7 +84,7 @@ abstract class Far_gold extends Model
         $gold_price = $latest_gold_price ? (double)number_format($latest_gold_price->buy_price, 2, '.', '') : 0;
         $gss_gold_value = (double)number_format($gss_balance * $gold_price, 2, '.', '');
         //$gss_gold_value must be in currency format with 2 decimal places and use dot as decimal separator. Don't round up or round down the gold value, just format it to 2 decimal places.
-        $gss_gold_value = \App\Helper\Far_helper::truncate_decimal($gss_gold_value, 2);
+        $gss_gold_value = Far_helper::truncate_decimal($gss_gold_value, 2);
 
         $gss_detail = [
             'balance' => round($gss_balance, 4),
