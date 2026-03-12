@@ -78,7 +78,7 @@ class CustomerProfileController extends Controller
             $body['data']['gold_price'] = $gold_value_detail['gold_price'];
             $body['data']['gss_gold_value'] = $gold_value_detail['gold_value'];
             $body['data']['gss_detail'] = [
-                'balance' => round($body['data']['gss_balance'], 4),
+                'balance' => $gold_value_detail['balance'],
                 'gold_price' => $gold_value_detail['gold_price'],
                 'gold_value' => $gold_value_detail['gold_value'],
             ];
