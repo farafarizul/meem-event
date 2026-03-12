@@ -87,7 +87,7 @@ abstract class Far_gold extends Model
         $gss_gold_value = Far_helper::truncate_decimal($gss_gold_value, 2);
 
         $gss_detail = [
-            'balance' => round($gss_balance, 4),
+            'balance' => $gss_balance,
             'gold_price' => $gold_price,
             'gold_value' => $gss_gold_value
         ];
