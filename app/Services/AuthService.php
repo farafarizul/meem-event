@@ -43,6 +43,7 @@ class AuthService
 
     public function logout(string $token): Response
     {
+
         return Http::withToken($token)
             ->timeout(15)
             ->get('https://meem.com.my/api/v1/auth/logout');

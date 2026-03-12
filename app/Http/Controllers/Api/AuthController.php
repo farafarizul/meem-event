@@ -63,13 +63,20 @@ class AuthController extends Controller
 
     public function logout(Request $request): JsonResponse
     {
-        $request->validate([
-            'meem_code' => 'required|string',
-        ]);
 
-        $meemCode = $request->input('meem_code');
+        // get Authentication: Bearer token from header
+        $authHeader = $request->header('Authorization');
+        if(!$authHeader || !str_starts_with($authHeader, 'Bearer ')){
+            return response()->json([
+                'success' => false,
+                'message' => 'Authorization token missing or invalid.',
+            ], 401);
+        }
+        //extract the token from the header
+        $token = substr($authHeader, 7);
 
-        $user = User::query()->where('meem_code', $meemCode)->first();
+
+        $user = User::query()->where('token', $token)->first();
 
         if (! $user) {
             return response()->json([
@@ -84,6 +91,7 @@ class AuthController extends Controller
                 'message' => 'No active session token found.',
             ], 422);
         }
+
 
         try {
             $upstream = $this->service->logout($user->token);
@@ -100,7 +108,12 @@ class AuthController extends Controller
 
         if ($upstream->successful() && ($body['success'] ?? false)) {
             try {
-                $this->service->syncLogout($meemCode);
+                $this->service->syncLogout($user->meem_code);
+
+                $log_data = $body;
+                $log_data['meem_code'] = $user->meem_code;
+                Far_log::insert_userlog(1, 'api', 'auth', 'logout' ,$log_data);
+
             } catch (\Throwable $e) {
                 Log::error('AuthLogout status sync failed', ['error' => $e->getMessage()]);
             }
