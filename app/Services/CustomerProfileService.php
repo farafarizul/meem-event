@@ -40,7 +40,7 @@ class CustomerProfileService
                 'profile_picture' => $data['profile_picture'] ?? null,
                 'updated_at'      => now(),
             ]);
-            
+
              return;
         }else{
             //update existing user
@@ -51,7 +51,7 @@ class CustomerProfileService
                 'email'           => $data['email'] ?? null,
                 'phone_number'    => $data['contact_no'] ?? null,
                 'meem_id'         => $data['id'] ?? null,
-                'meem_code'       => '4444444444444444',
+                'meem_code'       => $data['cs_code'] ?? null,
                 'profile_picture' => $data['profile_picture'] ?? null,
                 'updated_at'      => now(),
             ]);
