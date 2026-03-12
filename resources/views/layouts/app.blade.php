@@ -98,6 +98,12 @@
                         <i class="bi bi-check2-circle me-2"></i>Logs
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.gold-price.*') ? 'active' : '' }}"
+                       href="{{ route('admin.gold-price.index') }}">
+                        <i class="bi bi-graph-up-arrow me-2"></i>Gold Price
+                    </a>
+                </li>
             </ul>
         </nav>
 

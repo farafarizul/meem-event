@@ -32,7 +32,8 @@ return [
     ],
 
     'meem' => [
-        'base_url' => env('MEEM_API_BASE_URL', 'https://meem.com.my/api/v1'),
+        'base_url'        => env('MEEM_API_BASE_URL', 'https://meem.com.my/api/v1'),
+        'gold_price_token' => env('MEEM_GOLD_PRICE_TOKEN', '3173|aPsrnIGfi9BuOoMPRVMJA9EhQVBIQ3FCOwtJaiim700007aa'),
     ],
 
 ];
