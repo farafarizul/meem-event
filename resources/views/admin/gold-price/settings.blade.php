@@ -1,53 +1,63 @@
 <x-app-layout>
     <x-slot name="header">Gold Price Sync Settings</x-slot>
 
-    <div class="row justify-content-center">
-        <div class="col-md-7">
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-white">
-                    <h6 class="mb-0 fw-semibold"><i class="bi bi-gear me-1"></i>Gold Price Sync Settings</h6>
-                </div>
-                <div class="card-body">
-                    <p class="text-muted mb-4">
-                        This setting controls how often the system is allowed to call the external gold price API.
-                        The Linux cron remains running every minute — this setting controls the internal sync frequency.
-                    </p>
-
-                    <form method="POST" action="{{ route('admin.gold-price.settings.update') }}">
-                        @csrf
-
-                        <div class="mb-4">
-                            <label for="interval_minutes" class="form-label fw-semibold">Sync Interval</label>
-                            <select name="interval_minutes" id="interval_minutes"
-                                    class="form-select @error('interval_minutes') is-invalid @enderror">
-                                @foreach ([5, 10, 15, 30] as $option)
-                                    <option value="{{ $option }}" @selected($currentInterval == $option)>
-                                        Every {{ $option }} minutes
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('interval_minutes')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="alert alert-info d-flex align-items-start gap-2 mb-4" role="alert">
-                            <i class="bi bi-info-circle-fill mt-1"></i>
-                            <div>
-                                <strong>Note:</strong> The actual Linux cron job runs every minute
-                                (<code>* * * * *</code>). This setting determines the minimum time between
-                                real API calls. The scheduler will skip the API call if the configured
-                                interval has not elapsed since the last sync.
+    <div class="nk-block">
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+                <div class="card card-bordered">
+                    <div class="card-inner-group">
+                        <div class="card-inner">
+                            <div class="card-title">
+                                <h6 class="title"><em class="icon ni ni-setting me-1"></em>Gold Price Sync Settings</h6>
                             </div>
                         </div>
+                        <div class="card-inner">
+                            <p class="text-soft mb-4">
+                                This setting controls how often the system is allowed to call the external gold price API.
+                                The Linux cron remains running every minute — this setting controls the internal sync frequency.
+                            </p>
 
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-save me-1"></i>Save Setting
-                        </button>
-                        <a href="{{ route('admin.gold-price.index') }}" class="btn btn-outline-secondary ms-2">
-                            <i class="bi bi-arrow-left me-1"></i>Back to Gold Price History
-                        </a>
-                    </form>
+                            <form method="POST" action="{{ route('admin.gold-price.settings.update') }}">
+                                @csrf
+
+                                <div class="form-group mb-4">
+                                    <label for="interval_minutes" class="form-label fw-bold">Sync Interval</label>
+                                    <div class="form-control-wrap">
+                                        <select name="interval_minutes" id="interval_minutes"
+                                                class="form-select @error('interval_minutes') is-invalid @enderror">
+                                            @foreach ([5, 10, 15, 30] as $option)
+                                                <option value="{{ $option }}" @selected($currentInterval == $option)>
+                                                    Every {{ $option }} minutes
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('interval_minutes')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="alert alert-info d-flex align-items-start gap-2 mb-4" role="alert">
+                                    <em class="icon ni ni-info-fill mt-1"></em>
+                                    <div>
+                                        <strong>Note:</strong> The actual Linux cron job runs every minute
+                                        (<code>* * * * *</code>). This setting determines the minimum time between
+                                        real API calls. The scheduler will skip the API call if the configured
+                                        interval has not elapsed since the last sync.
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary">
+                                        <em class="icon ni ni-save me-1"></em>Save Setting
+                                    </button>
+                                    <a href="{{ route('admin.gold-price.index') }}" class="btn btn-outline-secondary">
+                                        <em class="icon ni ni-arrow-left me-1"></em>Back to Gold Price History
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

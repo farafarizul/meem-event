@@ -2,69 +2,77 @@
     <x-slot name="header">Check-in Records</x-slot>
 
     {{-- Event Selector --}}
-    <div class="card border-0 shadow-sm mb-3">
-        <div class="card-body py-2">
-            <form method="GET" action="{{ route('admin.checkins.index') }}" class="d-flex align-items-center gap-3 flex-wrap">
-                <label class="form-label fw-semibold mb-0 text-nowrap">
-                    <i class="bi bi-calendar2-event me-1"></i>Filter by Event:
-                </label>
-                <select name="event_id" id="event-selector" class="form-select form-select-sm" style="max-width:350px;">
-                    <option value="">-- All Events --</option>
-                    @foreach ($events as $event)
-                        <option value="{{ $event->event_id }}" {{ (string) $selectedEventId === (string) $event->event_id ? 'selected' : '' }}>
-                            {{ $event->event_name }}
-                            <small>({{ $event->unique_identifier }})</small>
-                        </option>
-                    @endforeach
-                </select>
-                <button type="submit" class="btn btn-sm btn-primary">
-                    <i class="bi bi-filter me-1"></i>Apply
-                </button>
-                @if ($selectedEventId)
-                    <a href="{{ route('admin.checkins.index') }}" class="btn btn-sm btn-outline-secondary">
-                        <i class="bi bi-x-circle me-1"></i>Clear
-                    </a>
-                @endif
-            </form>
-        </div>
-    </div>
-
-    <div class="card border-0 shadow-sm">
-        <div class="card-header bg-white d-flex justify-content-between align-items-center flex-wrap gap-2">
-            <h6 class="mb-0 fw-semibold">
-                <i class="bi bi-check2-circle me-1"></i>
-                Check-in Records
-                @if ($selectedEventId)
-                    @php $selectedEvent = $events->firstWhere('event_id', $selectedEventId); @endphp
-                    @if ($selectedEvent)
-                        &mdash; <span class="text-muted fw-normal">{{ $selectedEvent->event_name }}</span>
+    <div class="nk-block">
+        <div class="card card-bordered mb-3">
+            <div class="card-inner py-2">
+                <form method="GET" action="{{ route('admin.checkins.index') }}" class="d-flex align-items-center gap-3 flex-wrap">
+                    <label class="form-label fw-bold mb-0 text-nowrap">
+                        <em class="icon ni ni-calendar me-1"></em>Filter by Event:
+                    </label>
+                    <select name="event_id" id="event-selector" class="form-select form-select-sm" style="max-width:350px;">
+                        <option value="">-- All Events --</option>
+                        @foreach ($events as $event)
+                            <option value="{{ $event->event_id }}" {{ (string) $selectedEventId === (string) $event->event_id ? 'selected' : '' }}>
+                                {{ $event->event_name }}
+                                <small>({{ $event->unique_identifier }})</small>
+                            </option>
+                        @endforeach
+                    </select>
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <em class="icon ni ni-filter me-1"></em>Apply
+                    </button>
+                    @if ($selectedEventId)
+                        <a href="{{ route('admin.checkins.index') }}" class="btn btn-outline-secondary btn-sm">
+                            <em class="icon ni ni-cross-circle me-1"></em>Clear
+                        </a>
                     @endif
-                @endif
-            </h6>
-            <div class="d-flex gap-2">
-                <button id="btn-export-filtered" class="btn btn-sm btn-outline-secondary">
-                    <i class="bi bi-funnel me-1"></i>Export Filtered
-                </button>
-                <button id="btn-export-all" class="btn btn-sm btn-outline-success">
-                    <i class="bi bi-file-earmark-excel me-1"></i>Export All
-                </button>
+                </form>
             </div>
         </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table id="checkins-table" class="table table-hover align-middle w-100">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Meem Code</th>
-                            <th>Full Name</th>
-                            <th>Phone Number</th>
-                            <th>Event</th>
-                            <th>Checked In At</th>
-                            <th class="text-center">Actions</th>
-                        </tr>
-                    </thead>
-                </table>
+
+        <div class="card card-bordered">
+            <div class="card-inner-group">
+                <div class="card-inner">
+                    <div class="card-title-group">
+                        <div class="card-title">
+                            <h6 class="title">
+                                <em class="icon ni ni-check-circle me-1"></em>
+                                Check-in Records
+                                @if ($selectedEventId)
+                                    @php $selectedEvent = $events->firstWhere('event_id', $selectedEventId); @endphp
+                                    @if ($selectedEvent)
+                                        &mdash; <span class="text-soft fw-normal">{{ $selectedEvent->event_name }}</span>
+                                    @endif
+                                @endif
+                            </h6>
+                        </div>
+                        <div class="card-tools d-flex gap-2">
+                            <button id="btn-export-filtered" class="btn btn-outline-secondary btn-sm">
+                                <em class="icon ni ni-filter me-1"></em>Export Filtered
+                            </button>
+                            <button id="btn-export-all" class="btn btn-outline-success btn-sm">
+                                <em class="icon ni ni-file-xls me-1"></em>Export All
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-inner p-0">
+                    <div class="table-responsive">
+                        <table id="checkins-table" class="table table-orders w-100">
+                            <thead class="tb-odr-head">
+                                <tr class="tb-odr-item">
+                                    <th>#</th>
+                                    <th>Meem Code</th>
+                                    <th>Full Name</th>
+                                    <th>Phone Number</th>
+                                    <th>Event</th>
+                                    <th>Checked In At</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -74,7 +82,7 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header border-0">
-                    <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle me-1"></i>Confirm Delete</h5>
+                    <h5 class="modal-title text-danger"><em class="icon ni ni-alert-circle me-1"></em>Confirm Delete</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -83,7 +91,7 @@
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-danger btn-sm" id="btn-confirm-delete">
-                        <i class="bi bi-trash me-1"></i>Delete
+                        <em class="icon ni ni-trash me-1"></em>Delete
                     </button>
                 </div>
             </div>
