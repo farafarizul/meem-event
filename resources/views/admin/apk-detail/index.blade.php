@@ -23,8 +23,8 @@
                     <thead class="table-dark">
                         <tr>
                             <th>#</th>
-                            <th>Original Filename</th>
-                            <th>New Filename</th>
+                            <th>Filename</th>
+
                             <th>Uploaded Date</th>
                             <th>Description</th>
                             <th>Download Link</th>
@@ -71,7 +71,6 @@
             columns: [
                 { data: 'DT_RowIndex',       name: 'DT_RowIndex',       orderable: false, searchable: false, width: '50px' },
                 { data: 'original_filename', name: 'original_filename' },
-                { data: 'new_filename',      name: 'new_filename' },
                 { data: 'uploaded_date',     name: 'uploaded_date' },
                 { data: 'description',       name: 'description', className: 'wrap-pre' },
                 { data: 'download_link',     name: 'download_link',     orderable: false, searchable: false },
