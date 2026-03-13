@@ -1,4 +1,11 @@
 <x-app-layout>
+    <style>
+        .wrap-pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+    </style>
     <x-slot name="header">APK File Management</x-slot>
 
     <div class="card border-0 shadow-sm">
@@ -66,7 +73,7 @@
                 { data: 'original_filename', name: 'original_filename' },
                 { data: 'new_filename',      name: 'new_filename' },
                 { data: 'uploaded_date',     name: 'uploaded_date' },
-                { data: 'description',       name: 'description' },
+                { data: 'description',       name: 'description', className: 'wrap-pre' },
                 { data: 'download_link',     name: 'download_link',     orderable: false, searchable: false },
                 { data: 'action',            name: 'action',            orderable: false, searchable: false, className: 'text-center' }
             ],
