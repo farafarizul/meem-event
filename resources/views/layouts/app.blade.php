@@ -11,8 +11,8 @@
     <link id="skin-default" rel="stylesheet" href="{{ asset('dashlite/css/theme.css') }}">
     {{-- Bootstrap Icons (used in page content) --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    {{-- DataTables Bootstrap 5 CSS --}}
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.min.css">
+    {{-- DataTables Bootstrap 5 CSS (matches version bundled in bundle.js) --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 
     @stack('styles')
 </head>
@@ -236,11 +236,8 @@
     </div>
 </div>
 
-{{-- Dashlite bundle (includes jQuery & Bootstrap) --}}
+{{-- Dashlite bundle (includes jQuery, Bootstrap, DataTables 1.x & SimpleBar) --}}
 <script src="{{ asset('dashlite/js/bundle.js') }}"></script>
-{{-- DataTables JS --}}
-<script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.min.js"></script>
 {{-- Dashlite scripts (sidebar toggle, dropdowns, etc.) --}}
 <script src="{{ asset('dashlite/js/scripts.js') }}"></script>
 
