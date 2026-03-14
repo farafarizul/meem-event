@@ -64,7 +64,7 @@ class CustomerProfileController extends Controller
             $gold_value_detail = Far_gold::gold_value_detail($body['data']['gss_balance'] ?? 0);
 
 
-            $body['data']['gss_progress'] = [
+            $gss_progress = [
                 'balance' => $gold_progress_detail['balance'],
                 'threshold' => $gold_progress_detail['threshold'],
                 'progress_value' => $gold_progress_detail['progress_value'],
@@ -77,6 +77,7 @@ class CustomerProfileController extends Controller
                 'balance' => $gold_value_detail['balance'],
                 'gold_price' => $gold_value_detail['gold_price'],
                 'gold_value' => $gold_value_detail['gold_value'],
+                'gss_progress' => $gss_progress,
             ];
         }
 
