@@ -64,6 +64,7 @@ class CustomerProfileController extends Controller
             $gold_value_detail = Far_gold::gold_value_detail($body['data']['gss_balance'] ?? 0);
 
             //call controller GoldSilverPriceController to get gold price and set in $body['data']['gold_price']
+            request()->merge(['meem_code' => $body['data']['cs_code'] ?? 'unknown']);
             $latest_price_response = app(GoldSilverPriceController::class)->goldAndSilverPrice();
             $latest_price_array = $latest_price_response->getData(true)['data'] ?? [];
 

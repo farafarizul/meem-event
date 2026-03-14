@@ -64,9 +64,6 @@ class GoldSilverPriceController extends Controller
         //get parameter named meem_code from the url
         $meem_code = request()->query('meem_code', 'unknown');
 
-        $allParams = request()->all();
-        print_r($allParams); exit();
-
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
         $callerClass = $trace[1]['class'] ?? null;
         // Jika pemanggil adalah Controller (bukan sistem Laravel/Router)
