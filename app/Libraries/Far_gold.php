@@ -55,7 +55,7 @@ abstract class Far_gold extends Model
             'balance' => $gss_balance,
             'threshold' => $gss_user_progress_threshold,
             'progress_value' => (double)$gss_user_progress_value,
-            'progress_percentage' => $gss_user_progress_percentage,
+            'progress_percentage' => (float)number_format($gss_user_progress_percentage, 2, '.', ''),
             'progress_bar_percentage' => $gss_user_progress_percentage / 100
         ];
         return $gss_progress;

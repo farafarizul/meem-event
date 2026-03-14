@@ -56,7 +56,7 @@ abstract class Far_silver extends Model
             'balance' => $sss_balance,
             'threshold' => $sss_user_progress_threshold,
             'progress_value' => (double)$sss_user_progress_value,
-            'progress_percentage' => $sss_user_progress_percentage,
+            'progress_percentage' => (float)number_format($sss_user_progress_percentage, 2, '.', ''),
             'progress_bar_percentage' => $sss_user_progress_percentage / 100
         ];
         return $sss_progress;
