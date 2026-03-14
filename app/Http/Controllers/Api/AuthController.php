@@ -116,9 +116,12 @@ class AuthController extends Controller
             try {
                 $this->service->syncLogout($user->meem_code);
 
-                $body['data']['app_session'] = $request->input('app_session', 'unknown');
-                
+                $body['app_session'] = $request->input('app_session', 'unknown');
+
                 $log_data = $body;
+
+
+
                 $log_data['meem_code'] = $user->meem_code;
 
 
