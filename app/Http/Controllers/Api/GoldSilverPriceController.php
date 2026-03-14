@@ -64,8 +64,21 @@ class GoldSilverPriceController extends Controller
         //get parameter named meem_code from the url
         $meem_code = request()->query('meem_code', 'unknown');
 
-        //$log_data = $body['data'];
-        Far_log::insert_userlog(1, 'api', 'price', 'gold_and_silver_price' ,$returnData, $meem_code);
+        $allParams = request()->all();
+        print_r($allParams); exit();
+
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+        $callerClass = $trace[1]['class'] ?? null;
+        // Jika pemanggil adalah Controller (bukan sistem Laravel/Router)
+        // bermaksud ia dipanggil dari controller lain
+        $isInternalCall = $callerClass && str_contains($callerClass, 'App\Http\Controllers');
+
+        if (!$isInternalCall) {
+            // Hanya simpan log jika dipanggil secara direct (melalui Route)
+            Far_log::insert_userlog(1, 'api', 'price', 'gold_and_silver_price' ,$returnData, $meem_code);
+        }
+
+
 
         return response()->json([
             'success' => true,

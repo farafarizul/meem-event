@@ -63,6 +63,9 @@ class CustomerProfileController extends Controller
 
             $gold_value_detail = Far_gold::gold_value_detail($body['data']['gss_balance'] ?? 0);
 
+            //call controller GoldSilverPriceController to get gold price and set in $body['data']['gold_price']
+            $latest_price_response = app(GoldSilverPriceController::class)->goldAndSilverPrice();
+            $latest_price_array = $latest_price_response->getData(true)['data'] ?? [];
 
             $gss_progress = [
                 'balance' => $gold_progress_detail['balance'],
@@ -79,6 +82,7 @@ class CustomerProfileController extends Controller
                 'gold_value' => $gold_value_detail['gold_value'],
                 'gss_progress' => $gss_progress,
             ];
+            $body['data']['latest_price'] = $latest_price_array;
         }
 
         if($upstream->successful() && ($body['success'] ?? false) && isset($body['data']['gss_balance'])) {
