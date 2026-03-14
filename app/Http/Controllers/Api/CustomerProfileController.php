@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Libraries\Far_log;
 use App\Libraries\Far_gold;
+use App\Libraries\Far_silver;
 
 class CustomerProfileController extends Controller
 {
@@ -59,9 +60,9 @@ class CustomerProfileController extends Controller
          */
         if ($upstream->successful() && ($body['success'] ?? false) && isset($body['data'])) {
 
-            $gold_progress_detail = Far_gold::gold_progress_detail($body['data']['gss_balance'] ?? 0);
-
-            $gold_value_detail = Far_gold::gold_value_detail($body['data']['gss_balance'] ?? 0);
+            $gss_balance = $body['data']['gss_balance'] ?? 0;
+            $gold_progress_detail = Far_gold::gold_progress_detail($gss_balance ?? 0);
+            $gold_value_detail = Far_gold::gold_value_detail($gss_balance ?? 0);
 
             //call controller GoldSilverPriceController to get gold price and set in $body['data']['gold_price']
             request()->merge(['meem_code' => $body['data']['cs_code'] ?? 'unknown']);
@@ -84,6 +85,26 @@ class CustomerProfileController extends Controller
                 'gss_progress' => $gss_progress,
             ];
             $body['data']['latest_price'] = $latest_price_array;
+
+            //Silver progress detail
+            $sss_balance = $body['data']['gss_balance'] ?? 0;
+            $silver_progress_detail = Far_silver::silver_progress_detail($sss_balance ?? 0);
+            $silver_value_detail = Far_silver::silver_value_detail($sss_balance ?? 0);
+            $body['data']['silver_price'] = $silver_value_detail['silver_price'];
+            $body['data']['sss_silver_value'] = $silver_value_detail['silver_value'];
+            $body['data']['sss_silver_detail'] = [
+                'balance' => $silver_value_detail['balance'],
+                'silver_price' => $silver_value_detail['silver_price'],
+                'silver_value' => $silver_value_detail['silver_value'],
+                'gss_progress' => [
+                    'balance' => $silver_progress_detail['balance'],
+                    'threshold' => $silver_progress_detail['threshold'],
+                    'progress_value' => $silver_progress_detail['progress_value'],
+                    'progress_percentage' => $silver_progress_detail['progress_percentage'],
+                    'progress_bar_percentage' => $silver_progress_detail['progress_bar_percentage'],
+                ],
+            ];
+
         }
 
         if($upstream->successful() && ($body['success'] ?? false) && isset($body['data']['gss_balance'])) {
