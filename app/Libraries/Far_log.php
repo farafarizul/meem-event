@@ -74,6 +74,11 @@ abstract class Far_log extends Model
             $insert_data['meem_code'] = $meem_code;
         }
 
+        //if $insert_data['app_session'] is set, set $insert_data['app_session'] to $log_data_json['app_session']
+        if(isset($log_data_json['app_session'])){
+            $insert_data['app_session'] = $log_data_json['app_session'];
+        }
+
         $log_id = DB::table('far_log')->insertGetId($insert_data);
         return $log_id;
     }
