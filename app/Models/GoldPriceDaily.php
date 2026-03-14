@@ -22,6 +22,7 @@ class GoldPriceDaily extends Model
         'close_price',
         'highest_price',
         'lowest_price',
+        'candle_direction',
         'reason_from_ai',
     ];
 
