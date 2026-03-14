@@ -30,6 +30,7 @@ class GoldPriceDailyController extends Controller
             'close_price',
             'highest_price',
             'lowest_price',
+            'candle_direction',
             'reason_from_ai',
             'created_at',
             'updated_at',
@@ -63,6 +64,9 @@ class GoldPriceDailyController extends Controller
             ->editColumn('reason_from_ai',  fn ($row) => $row->reason_from_ai
                 ? '<span title="' . e($row->reason_from_ai) . '">' . e(mb_substr($row->reason_from_ai, 0, 80)) . (mb_strlen($row->reason_from_ai) > 80 ? '…' : '') . '</span>'
                 : '<span class="text-muted">—</span>')
+            ->addColumn('candle_direction', function ($row) {
+                return $this->candleDirectionBadge($row->candle_direction);
+            })
             ->editColumn('created_at', fn ($row) => $row->created_at->format('d M Y H:i'))
             ->editColumn('updated_at', fn ($row) => $row->updated_at->format('d M Y H:i'))
             ->addColumn('action', function ($row) {
@@ -80,7 +84,7 @@ class GoldPriceDailyController extends Controller
 
                 return $view . $sync . $regen;
             })
-            ->rawColumns(['reason_from_ai', 'action'])
+            ->rawColumns(['reason_from_ai', 'candle_direction', 'action'])
             ->orderColumn('gold_price_date', 'gold_price_date $1')
             ->make(true);
     }
@@ -126,6 +130,17 @@ class GoldPriceDailyController extends Controller
 
         return redirect()->route('admin.gold-price-daily.index')
             ->with($flashKey, $result['message']);
+    }
+
+    private function candleDirectionBadge(?string $direction): string
+    {
+        $map = [
+            'positive' => ['label' => 'Positive', 'class' => 'bg-success'],
+            'negative' => ['label' => 'Negative', 'class' => 'bg-danger'],
+            'neutral'  => ['label' => 'Neutral',  'class' => 'bg-secondary'],
+        ];
+        $cfg = $map[$direction ?? 'neutral'] ?? $map['neutral'];
+        return '<span class="badge ' . $cfg['class'] . '">' . $cfg['label'] . '</span>';
     }
 
     private function buildStats(): array

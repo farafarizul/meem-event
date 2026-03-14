@@ -43,12 +43,13 @@ class GoldPriceDailyAggregatorService
         $daily = GoldPriceDaily::updateOrCreate(
             ['gold_price_date' => $targetDate],
             [
-                'sell_price'    => round($avgSell, 2),
-                'buy_price'     => round($avgBuy, 2),
-                'open_price'    => round($openPrice, 2),
-                'close_price'   => round($closePrice, 2),
-                'highest_price' => round($highestBuy, 2),
-                'lowest_price'  => round($lowestBuy, 2),
+                'sell_price'       => round($avgSell, 2),
+                'buy_price'        => round($avgBuy, 2),
+                'open_price'       => round($openPrice, 2),
+                'close_price'      => round($closePrice, 2),
+                'highest_price'    => round($highestBuy, 2),
+                'lowest_price'     => round($lowestBuy, 2),
+                'candle_direction' => $this->resolveCandleDirection($openPrice, $closePrice),
             ]
         );
 
@@ -102,6 +103,23 @@ class GoldPriceDailyAggregatorService
         }
 
         return ['status' => 'ai_failed', 'message' => "AI reason could not be generated for {$date}."];
+    }
+
+    private function resolveCandleDirection(?float $openPrice, ?float $closePrice): string
+    {
+        if ($openPrice === null || $closePrice === null) {
+            return 'neutral';
+        }
+
+        if ($openPrice < $closePrice) {
+            return 'positive';
+        }
+
+        if ($openPrice > $closePrice) {
+            return 'negative';
+        }
+
+        return 'neutral';
     }
 
     private function refreshAiReason(GoldPriceDaily $daily, string $date): void

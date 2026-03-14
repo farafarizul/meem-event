@@ -50,6 +50,25 @@
                                 <th class="text-muted">Open Price</th>
                                 <td>{{ $goldPriceDaily->open_price !== null ? 'MYR ' . number_format($goldPriceDaily->open_price, 2) : '—' }}</td>
                             </tr>
+                            <tr>
+                                <th class="text-muted">Candle Direction</th>
+                                <td>
+                                    @php
+                                        $dir = $goldPriceDaily->candle_direction ?? 'neutral';
+                                        $badgeClass = match($dir) {
+                                            'positive' => 'bg-success',
+                                            'negative' => 'bg-danger',
+                                            default    => 'bg-secondary',
+                                        };
+                                        $badgeLabel = match($dir) {
+                                            'positive' => 'Positive',
+                                            'negative' => 'Negative',
+                                            default    => 'Neutral',
+                                        };
+                                    @endphp
+                                    <span class="badge {{ $badgeClass }}">{{ $badgeLabel }}</span>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

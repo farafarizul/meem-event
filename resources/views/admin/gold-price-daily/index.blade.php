@@ -189,6 +189,7 @@
                             <th>Close</th>
                             <th>Highest</th>
                             <th>Lowest</th>
+                            <th>Candle</th>
                             <th>AI Reason</th>
                             <th>Created At</th>
                             <th>Updated At</th>
@@ -223,6 +224,7 @@
                 { data: 'close_price',          name: 'close_price',   className: 'text-end' },
                 { data: 'highest_price',        name: 'highest_price', className: 'text-end' },
                 { data: 'lowest_price',         name: 'lowest_price',  className: 'text-end' },
+                { data: 'candle_direction',     name: 'candle_direction', orderable: false, searchable: false, className: 'text-center' },
                 { data: 'reason_from_ai',       name: 'reason_from_ai', orderable: false },
                 { data: 'created_at',           name: 'created_at' },
                 { data: 'updated_at',           name: 'updated_at' },
