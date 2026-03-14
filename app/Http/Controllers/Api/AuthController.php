@@ -49,7 +49,7 @@ class AuthController extends Controller
                 //generate random 20 character string, uppercase only for app_session
                 $app_session = strtoupper(substr(bin2hex(random_bytes(10)), 0, 20));
 
-                $body['data']['apps_session'] = $app_session;
+                $body['data']['app_session'] = $app_session;
                 $log_data = $body['data'];
                 Far_log::insert_userlog(1, 'api', 'auth', 'login' ,$log_data);
             }
