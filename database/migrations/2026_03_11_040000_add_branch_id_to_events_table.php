@@ -8,15 +8,19 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('events', function (Blueprint $table) {
-            $table->unsignedBigInteger('branch_id')->nullable()->after('event_id');
-        });
+        if (Schema::hasTable('events') && !Schema::hasColumn('events', 'branch_id')) {
+            Schema::table('events', function (Blueprint $table) {
+                $table->unsignedBigInteger('branch_id')->nullable()->after('event_id');
+            });
+        }
     }
 
     public function down(): void
     {
-        Schema::table('events', function (Blueprint $table) {
-            $table->dropColumn('branch_id');
-        });
+        if (Schema::hasTable('events') && Schema::hasColumn('events', 'branch_id')) {
+            Schema::table('events', function (Blueprint $table) {
+                $table->dropColumn('branch_id');
+            });
+        }
     }
 };
