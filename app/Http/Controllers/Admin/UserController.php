@@ -45,9 +45,11 @@ class UserController extends Controller
                     . '<i class="bi bi-pencil-fill"></i> Edit</button>';
                 $del = '<button class="btn btn-sm btn-danger btn-delete"'
                     . ' data-id="' . $user->user_id . '"'
-                    . ' data-name="' . e($user->fullname) . '">';
-                    //. '<i class="bi bi-trash-fill"></i> Delete</button>';
-                return $edit . $del;
+                    . ' data-name="' . e($user->fullname) . '">'
+                    . '<i class="bi bi-trash-fill"></i> Delete</button>';
+                //remove delete button for now, as we are only soft deleting users
+                return $edit;
+                //return $edit . $del;
             })
             ->editColumn('created_at', fn ($u) => $u->created_at->format('d M Y'))
             ->rawColumns(['profile_picture', 'action'])
