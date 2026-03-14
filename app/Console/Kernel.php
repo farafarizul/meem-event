@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('gold-price:sync')->everyMinute();
         $schedule->command('silver-price:sync')->everyMinute();
         $schedule->command('gold-price:aggregate-daily')->dailyAt('01:00');
+        $schedule->command('silver-price:aggregate-daily')->dailyAt('01:00');
     }
 
     /**

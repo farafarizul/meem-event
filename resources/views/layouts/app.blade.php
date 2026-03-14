@@ -117,6 +117,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.silver-price-daily.*') ? 'active' : '' }}"
+                       href="{{ route('admin.silver-price-daily.index') }}">
+                        <i class="bi bi-bar-chart-line me-2"></i>Silver Price Daily
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.apk-detail.*') ? 'active' : '' }}"
                        href="{{ route('admin.apk-detail.index') }}">
                         <i class="bi bi-android2 me-2"></i>APK Management
