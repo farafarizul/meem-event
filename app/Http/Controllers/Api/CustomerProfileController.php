@@ -88,6 +88,7 @@ class CustomerProfileController extends Controller
 
             //Silver progress detail
             $sss_balance = $body['data']['gss_balance'] ?? 0;
+            $sss_balance = 3.5; // for testing
             $silver_progress_detail = Far_silver::silver_progress_detail($sss_balance ?? 0);
             $silver_value_detail = Far_silver::silver_value_detail($sss_balance ?? 0);
             $body['data']['silver_price'] = $silver_value_detail['silver_price'];
