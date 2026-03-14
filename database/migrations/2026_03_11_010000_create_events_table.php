@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id('event_id')->unique()->autoIncrement();
+            $table->unsignedBigInteger('branch_id')->nullable();
             $table->enum('category_event', ['online', 'onsite']);
             $table->string('event_name');
             $table->string('location');
