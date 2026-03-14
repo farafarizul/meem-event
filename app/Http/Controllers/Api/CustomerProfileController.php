@@ -110,6 +110,7 @@ class CustomerProfileController extends Controller
         }
 
         if($upstream->successful() && ($body['success'] ?? false) && isset($body['data']['gss_balance'])) {
+            $log_data['app_session'] = $request->query('app_session', 'unknown');
             $log_data = $body['data'];
             Far_log::insert_userlog(1, 'api', 'customer', 'profile' ,$log_data);
         }
