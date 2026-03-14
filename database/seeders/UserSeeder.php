@@ -11,11 +11,11 @@ class UserSeeder extends Seeder
     public function run(): void
     {
 
-        // Generate 30 dummy users with sequential meem_code starting from MEEM000001
+        // Generate 5 dummy users with sequential meem_code starting from MEEM000001
         $users = [];
-        for ($i = 1; $i <= 30; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             $users[] = [
-                'fullname'     => fake()->name(),
+                'fullname'     => strtoupper(fake()->name()),
                 'phone_number' => fake()->numerify('601########'),
                 'meem_code'    => 'MEEM' . str_pad($i, 6, '0', STR_PAD_LEFT),
                 'email'        => fake()->unique()->safeEmail(),
