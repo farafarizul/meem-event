@@ -23,10 +23,12 @@ class Branch extends Model
         'person_in_charge_name',
         'person_in_charge_phone',
         'branch_type',
+        'status',
     ];
 
     public function events()
     {
         return $this->hasMany(Event::class, 'branch_id', 'branch_id');
     }
+
 }

@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EventCheckin extends Model
 {
-    use HasFactory;
+    use HasFactory, softDeletes;
 
     protected $primaryKey = 'event_checkin_id';
 
@@ -15,6 +16,7 @@ class EventCheckin extends Model
         'event_id',
         'user_id',
         'checked_in_at',
+        'status',
     ];
 
     protected $casts = [

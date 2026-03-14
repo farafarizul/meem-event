@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Event extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $primaryKey = 'event_id';
 
@@ -19,6 +20,7 @@ class Event extends Model
         'start_date',
         'end_date',
         'unique_identifier',
+        'status',
     ];
 
     protected $casts = [

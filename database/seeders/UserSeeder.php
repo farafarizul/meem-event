@@ -10,7 +10,7 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        /*
+
         // Generate 30 dummy users with sequential meem_code starting from MEEM000001
         $users = [];
         for ($i = 1; $i <= 30; $i++) {
@@ -27,6 +27,6 @@ class UserSeeder extends Seeder
         }
 
         User::insert($users);
-        */
+
     }
 }

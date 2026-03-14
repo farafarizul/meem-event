@@ -16,6 +16,8 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('unique_identifier', 16)->unique();
+            $table->string('status', 20)->default('active');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

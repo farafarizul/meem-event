@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('person_in_charge_name')->nullable();
             $table->string('person_in_charge_phone', 20)->nullable();
             $table->string('branch_type', 20)->default('Branch');
+            $table->string('status', 20)->default('active');
             $table->softDeletes();
             $table->timestamps();
         });

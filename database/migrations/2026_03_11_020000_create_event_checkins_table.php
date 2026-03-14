@@ -13,6 +13,8 @@ return new class extends Migration
             $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamp('checked_in_at')->useCurrent();
+            $table->string('status', 20)->default('active');
+            $table->softDeletes();
             $table->timestamps();
 
             //$table->unique(['event_id', 'user_id']);
