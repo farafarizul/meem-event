@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->string('status', 20)->default('active');
+            $table->string('token')->nullable();
+            $table->string('apps_login_status')->default('no_data');
             $table->rememberToken();
             $table->timestamps();
         });

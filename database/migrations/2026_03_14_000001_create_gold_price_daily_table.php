@@ -17,6 +17,7 @@ return new class extends Migration
             $table->decimal('close_price', 12, 2)->nullable();
             $table->decimal('highest_price', 12, 2)->nullable();
             $table->decimal('lowest_price', 12, 2)->nullable();
+            $table->string('candle_direction')->nullable();
             $table->longText('reason_from_ai')->nullable();
             $table->timestamps();
         });
