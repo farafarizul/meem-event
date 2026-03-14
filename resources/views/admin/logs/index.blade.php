@@ -189,12 +189,16 @@
         $(document).on('click', '.btn-view-json', function () {
             var raw = $(this).data('json') || '';
             var display;
-            try {
-                var parsed = JSON.parse(raw);
-                display = syntaxHighlight(JSON.stringify(parsed, null, 2));
-            } catch (e) {
-                display = $('<div>').text(raw).html();
+
+            var jsontostring = JSON.stringify(raw, null, 2);
+            //if jsontostring not a string, display raw
+            if (typeof jsontostring !== 'string') {
+                jsontostring = String(raw);
+            }else{
+                display = syntaxHighlight(jsontostring);
+                console.log(display)
             }
+
             $('#json-display').html(display);
             $('#jsonModal').modal('show');
         });
