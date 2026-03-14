@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Libraries\Far_log;
 use App\Models\GoldPrice;
 use App\Models\SilverPrice;
 use Illuminate\Http\JsonResponse;
@@ -55,12 +56,20 @@ class GoldSilverPriceController extends Controller
             ], 404);
         }
 
+        $returnData = [
+            'gold'   => $gold   ? $this->formatPrice($gold)   : null,
+            'silver' => $silver ? $this->formatPrice($silver) : null,
+        ];
+
+        //get parameter named meem_code from the url
+        $meem_code = request()->query('meem_code', 'unknown');
+
+        //$log_data = $body['data'];
+        Far_log::insert_userlog(1, 'api', 'price', 'gold_and_silver_price' ,$returnData, $meem_code);
+
         return response()->json([
             'success' => true,
-            'data'    => [
-                'gold'   => $gold   ? $this->formatPrice($gold)   : null,
-                'silver' => $silver ? $this->formatPrice($silver) : null,
-            ],
+            'data'    => $returnData,
         ]);
     }
 

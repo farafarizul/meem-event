@@ -43,7 +43,7 @@ abstract class Far_log extends Model
         return $log_id;
     }
 
-    public static function insert_userlog($user_id, $trail_module, $trail_method, $trail_operation, $log_data_json){
+    public static function insert_userlog($user_id, $trail_module, $trail_method, $trail_operation, $log_data_json, $meem_code = null){
         $insert_data = array();
         if(!isset($log_data_json['create_dttm'])){
             $insert_data['create_dttm'] = date("Y-m-d H:i:s");
@@ -67,6 +67,11 @@ abstract class Far_log extends Model
             $insert_data['meem_code'] = $log_data_json['customer'];
         }elseif (isset($log_data_json['cs_code'])){
             $insert_data['meem_code'] = $log_data_json['cs_code'];
+        }
+
+        //if $insert_data['meem_code'] is not set and $meem_code parameter is not null, set $insert_data['meem_code'] to $meem_code parameter
+        if(!isset($insert_data['meem_code']) && isset($meem_code)){
+            $insert_data['meem_code'] = $meem_code;
         }
 
         $log_id = DB::table('far_log')->insertGetId($insert_data);
