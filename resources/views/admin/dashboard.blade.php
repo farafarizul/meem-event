@@ -356,7 +356,7 @@
                                 @forelse ($apk_list as $apk)
                                     <tr>
                                         <td>{{ $apk->original_filename }}</td>
-                                        <td class="text-muted small">{{ $apk->description ?? '-' }}</td>
+                                        <td class="text-muted small" style="white-space: pre-wrap;">{{ $apk->description ?? '-' }}</td>
                                         <td class="text-muted small">{{ $apk->uploaded_date ? $apk->uploaded_date->format('d M Y') : '-' }}</td>
                                         <td>
                                             @if($apk->download_link)
