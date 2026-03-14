@@ -42,8 +42,10 @@ class AuthController extends Controller
         if ($upstream->successful() && ($body['success'] ?? false) && isset($body['data'])) {
             $meemCode = $body['data']['customer'] ?? null;
             $token    = $body['data']['token'] ?? null;
+            $app_session = $request->input('app_session', null);
 
             if($meemCode && $token){
+                $body['data']['apps_session'] = $app_session;
                 $log_data = $body['data'];
                 Far_log::insert_userlog(1, 'api', 'auth', 'login' ,$log_data);
             }
