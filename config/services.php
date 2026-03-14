@@ -37,4 +37,10 @@ return [
         'silver_price_token' => env('MEEM_SILVER_PRICE_TOKEN', '3173|aPsrnIGfi9BuOoMPRVMJA9EhQVBIQ3FCOwtJaiim700007aa'),
     ],
 
+    'groq' => [
+        'api_key' => env('GROQ_API_KEY'),
+        'api_url' => env('GROQ_API_URL', 'https://api.groq.com/openai/v1/responses'),
+        'model'   => env('GROQ_MODEL', 'moonshotai/kimi-k2-instruct-0905'),
+    ],
+
 ];
