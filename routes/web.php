@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventCheckinController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\GoldPriceController;
+use App\Http\Controllers\Admin\GoldPriceDailyController;
 use App\Http\Controllers\Admin\GoldPriceSyncSettingController;
 use App\Http\Controllers\Admin\SilverPriceController;
 use App\Http\Controllers\Admin\SilverPriceSyncSettingController;
@@ -100,6 +101,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(
     // Silver Price Sync Settings
     Route::get('/settings/silver-price-sync', [SilverPriceSyncSettingController::class, 'index'])->name('silver-price.settings');
     Route::post('/settings/silver-price-sync', [SilverPriceSyncSettingController::class, 'update'])->name('silver-price.settings.update');
+
+    // Gold Price Daily (daily summaries + AI reason)
+    Route::get('/gold-price-daily', [GoldPriceDailyController::class, 'index'])->name('gold-price-daily.index');
+    Route::get('/gold-price-daily/datatable', [GoldPriceDailyController::class, 'datatable'])->name('gold-price-daily.datatable');
+    Route::get('/gold-price-daily/{goldPriceDaily}', [GoldPriceDailyController::class, 'show'])->name('gold-price-daily.show');
+    Route::post('/gold-price-daily/manual-sync', [GoldPriceDailyController::class, 'manualSync'])->name('gold-price-daily.manual-sync');
+    Route::post('/gold-price-daily/{goldPriceDaily}/sync-this', [GoldPriceDailyController::class, 'syncThis'])->name('gold-price-daily.sync-this');
+    Route::post('/gold-price-daily/{goldPriceDaily}/regen-ai', [GoldPriceDailyController::class, 'regenAi'])->name('gold-price-daily.regen-ai');
 });
 
 require __DIR__ . '/auth.php';
