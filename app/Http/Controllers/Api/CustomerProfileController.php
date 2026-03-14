@@ -111,7 +111,7 @@ class CustomerProfileController extends Controller
 
 
         if($upstream->successful() && ($body['success'] ?? false) && isset($body['data']['gss_balance'])) {
-            $body['data']['app_session'] = $request->input('app_session', 'unknownaa');
+            $body['data']['app_session'] = $request->input('app_session', 'unknown');
             $log_data = $body['data'];
 
             //print_r($log_data); exit();
