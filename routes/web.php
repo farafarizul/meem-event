@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\GoldPriceController;
 use App\Http\Controllers\Admin\GoldPriceDailyController;
 use App\Http\Controllers\Admin\GoldPriceSyncSettingController;
 use App\Http\Controllers\Admin\SilverPriceController;
+use App\Http\Controllers\Admin\SilverPriceDailyController;
 use App\Http\Controllers\Admin\SilverPriceSyncSettingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Public\CheckinController;
@@ -109,6 +110,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(
     Route::post('/gold-price-daily/manual-sync', [GoldPriceDailyController::class, 'manualSync'])->name('gold-price-daily.manual-sync');
     Route::post('/gold-price-daily/{goldPriceDaily}/sync-this', [GoldPriceDailyController::class, 'syncThis'])->name('gold-price-daily.sync-this');
     Route::post('/gold-price-daily/{goldPriceDaily}/regen-ai', [GoldPriceDailyController::class, 'regenAi'])->name('gold-price-daily.regen-ai');
+
+    // Silver Price Daily (daily summaries + AI reason)
+    Route::get('/silver-price-daily', [SilverPriceDailyController::class, 'index'])->name('silver-price-daily.index');
+    Route::get('/silver-price-daily/datatable', [SilverPriceDailyController::class, 'datatable'])->name('silver-price-daily.datatable');
+    Route::post('/silver-price-daily/manual-sync', [SilverPriceDailyController::class, 'manualSync'])->name('silver-price-daily.manual-sync');
+    Route::get('/silver-price-daily/{silverPriceDaily}', [SilverPriceDailyController::class, 'show'])->name('silver-price-daily.show');
+    Route::post('/silver-price-daily/{silverPriceDaily}/sync-this', [SilverPriceDailyController::class, 'syncThis'])->name('silver-price-daily.sync-this');
+    Route::post('/silver-price-daily/{silverPriceDaily}/regen-ai', [SilverPriceDailyController::class, 'regenAi'])->name('silver-price-daily.regen-ai');
 });
 
 require __DIR__ . '/auth.php';
