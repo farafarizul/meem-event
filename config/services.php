@@ -43,4 +43,9 @@ return [
         'model'   => env('GROQ_MODEL', 'moonshotai/kimi-k2-instruct-0905'),
     ],
 
+    'onesignal' => [
+        'app_id'       => env('ONESIGNAL_APP_ID', '65a129e2-aed4-49eb-b00a-9f07a5c05ba5'),
+        'rest_api_key' => env('ONESIGNAL_REST_API_KEY', 'gcxkfsmlxukufyr4bw6q4sey6'),
+    ],
+
 ];

@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\GoldPriceController;
 use App\Http\Controllers\Admin\GoldPriceDailyController;
 use App\Http\Controllers\Admin\GoldPriceSyncSettingController;
+use App\Http\Controllers\Admin\PushNotificationController;
 use App\Http\Controllers\Admin\SilverPriceController;
 use App\Http\Controllers\Admin\SilverPriceDailyController;
 use App\Http\Controllers\Admin\SilverPriceSyncSettingController;
@@ -102,6 +103,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(
     // Silver Price Sync Settings
     Route::get('/settings/silver-price-sync', [SilverPriceSyncSettingController::class, 'index'])->name('silver-price.settings');
     Route::post('/settings/silver-price-sync', [SilverPriceSyncSettingController::class, 'update'])->name('silver-price.settings.update');
+
+    // Push Notifications
+    Route::get('/push-notifications', [PushNotificationController::class, 'index'])->name('push-notifications.index');
+    Route::post('/push-notifications', [PushNotificationController::class, 'store'])->name('push-notifications.store');
+    Route::get('/push-notifications/datatable', [PushNotificationController::class, 'datatable'])->name('push-notifications.datatable');
+    Route::get('/push-notifications/users/search', [PushNotificationController::class, 'usersSearch'])->name('push-notifications.users.search');
+    Route::get('/push-notifications/{pushNotification}', [PushNotificationController::class, 'show'])->name('push-notifications.show');
 
     // Gold Price Daily (daily summaries + AI reason)
     Route::get('/gold-price-daily', [GoldPriceDailyController::class, 'index'])->name('gold-price-daily.index');
