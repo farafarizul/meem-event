@@ -50,7 +50,7 @@ class AuthController extends Controller
                 $app_session = strtoupper(substr(bin2hex(random_bytes(10)), 0, 20));
 
                 $body['data']['app_session'] = $app_session;
-                $body['data']['device_info'] = $request->input('device_info', 'unknown');
+                $body['data']['device_info_json'] = $request->input('device_info_json', 'unknown');
                 $log_data = $body['data'];
                 Far_log::insert_userlog(1, 'api', 'auth', 'login' ,$log_data);
             }
