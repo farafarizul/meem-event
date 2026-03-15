@@ -48,7 +48,8 @@ class AuthController extends Controller
 
                 //generate random 20 character string, uppercase only for app_session
                 $app_session = strtoupper(substr(bin2hex(random_bytes(10)), 0, 20));
-
+                $device_info_json = $request->input('device_info_json', 'unknown');
+                print_r($device_info_json); exit();
                 $body['data']['app_session'] = $app_session;
                 $body['data']['device_info_json'] = $request->input('device_info_json', 'unknown');
                 $log_data = $body['data'];
