@@ -20,7 +20,7 @@ class UserController extends Controller
     {
         $users = User::where('is_admin', false)
             ->where('status', 'active')
-            ->select(['user_id', 'meem_code', 'meem_id', 'fullname', 'phone_number', 'email', 'created_at', 'profile_picture']);
+            ->select(['user_id', 'meem_code', 'meem_id', 'fullname', 'phone_number', 'email', 'created_at', 'profile_picture', 'device_name']);
 
         return DataTables::of($users)
             ->addIndexColumn()

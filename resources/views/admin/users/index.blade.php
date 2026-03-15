@@ -25,6 +25,7 @@
                             <th>Full Name</th>
                             <th>Phone Number</th>
                             <th>Email</th>
+                            <th>Device</th>
                             <th>Registered</th>
                             <th class="text-center">Actions</th>
                         </tr>
@@ -120,6 +121,7 @@
                 { data: 'fullname',     name: 'fullname' },
                 { data: 'phone_number', name: 'phone_number' },
                 { data: 'email',        name: 'email', defaultContent: '-' },
+                { data: 'device_name',        name: 'device_name', defaultContent: '-' },
                 { data: 'created_at',   name: 'created_at' },
                 { data: 'action',       name: 'action', orderable: false, searchable: false, className: 'text-center' }
             ],
