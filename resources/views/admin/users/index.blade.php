@@ -35,51 +35,6 @@
         </div>
     </div>
 
-    {{-- Edit User Modal --}}
-    <div class="modal fade" id="editModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="editForm">
-                    @csrf
-                    <input type="hidden" id="edit-id">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><i class="bi bi-pencil me-1"></i>Edit User</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="edit-errors" class="alert alert-danger d-none"></div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Meem Code <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="edit-meemcode" name="meem_code" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Meem ID</label>
-                            <input type="text" class="form-control" id="edit-meemid" name="meem_id">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="edit-fullname" name="fullname" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Phone Number <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="edit-phone" name="phone_number" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Email</label>
-                            <input type="email" class="form-control" id="edit-email" name="email">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-save me-1"></i>Save Changes
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
     {{-- Delete Confirm Modal --}}
     <div class="modal fade" id="deleteModal" tabindex="-1">
         <div class="modal-dialog modal-sm">
@@ -139,43 +94,6 @@
         // Export all
         $('#btn-export-all').on('click', function () {
             window.location.href = exportUrl;
-        });
-
-        // Edit button
-        $(document).on('click', '.btn-edit', function () {
-            var btn = $(this);
-            $('#edit-id').val(btn.data('id'));
-            $('#edit-meemcode').val(btn.data('meemcode'));
-            $('#edit-meemid').val(btn.data('meemid'));
-            $('#edit-fullname').val(btn.data('fullname'));
-            $('#edit-phone').val(btn.data('phone'));
-            $('#edit-email').val(btn.data('email'));
-            $('#edit-errors').addClass('d-none').html('');
-            $('#editModal').modal('show');
-        });
-
-        // Submit edit form via AJAX
-        $('#editForm').on('submit', function (e) {
-            e.preventDefault();
-            var id   = $('#edit-id').val();
-            var data = $(this).serialize() + '&_method=PUT';
-            $('#edit-errors').addClass('d-none').html('');
-
-            $.ajax({
-                url: '/admin/users/' + id,
-                method: 'POST',
-                data: data,
-                success: function (res) {
-                    $('#editModal').modal('hide');
-                    table.ajax.reload(null, false);
-                },
-                error: function (xhr) {
-                    var errors = xhr.responseJSON && xhr.responseJSON.errors
-                        ? Object.values(xhr.responseJSON.errors).flat().join('<br>')
-                        : 'An error occurred. Please try again.';
-                    $('#edit-errors').removeClass('d-none').html(errors);
-                }
-            });
         });
 
         // Delete button

@@ -54,6 +54,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/datatable', [UserController::class, 'datatable'])->name('users.datatable');
     Route::get('/users/export', [UserController::class, 'export'])->name('users.export');
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::get('/users/{user}/tab/basic-info', [UserController::class, 'tabBasicInfo'])->name('users.tab.basic-info');
+    Route::get('/users/{user}/tab/events', [UserController::class, 'tabEvents'])->name('users.tab.events');
+    Route::get('/users/{user}/tab/logs', [UserController::class, 'tabLogs'])->name('users.tab.logs');
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
