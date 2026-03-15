@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'is_admin',
         'status',
+        'device_name',
         'token',
         'apps_login_status',
     ];
