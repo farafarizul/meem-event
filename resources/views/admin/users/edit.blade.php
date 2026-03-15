@@ -74,7 +74,7 @@
     <div class="row g-3 mb-4">
 
         {{-- Card 1: Introducer --}}
-        <div class="col-md-4">
+        <div class="col-md-6 col-lg-3">
             <div class="card h-100 border-0 shadow-sm">
                 <div class="card-header bg-primary text-white py-2">
                     <i class="bi bi-person-badge me-1"></i> Introducer
@@ -101,7 +101,7 @@
         </div>
 
         {{-- Card 2: GSS (Gold Safe Storage) --}}
-        <div class="col-md-4">
+        <div class="col-md-6 col-lg-3">
             <div class="card h-100 border-0 shadow-sm">
                 <div class="card-header bg-warning py-2">
                     <i class="bi bi-safe me-1"></i> GSS (Gold Safe Storage)
@@ -149,8 +149,57 @@
             </div>
         </div>
 
-        {{-- Card 3: Session --}}
-        <div class="col-md-4">
+        {{-- Card 3: SSS (Silver Safe Storage) --}}
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-header bg-secondary text-white py-2">
+                    <i class="bi bi-safe me-1"></i> SSS (Silver Safe Storage)
+                </div>
+                <div class="card-body">
+                    @if ($sssDetail)
+                        @php
+                            $sssBalance     = $sssDetail['balance'] ?? '—';
+                            $silverPrice    = $sssDetail['silver_price'] ?? '—';
+                            $silverValue    = $sssDetail['silver_value'] ?? '—';
+                            $sssProgress    = $sssDetail['gss_progress'] ?? [];
+                            $sssProgressPct = isset($sssProgress['progress_percentage'])
+                                ? min(100, (float) $sssProgress['progress_percentage'])
+                                : null;
+                            $sssThreshold   = $sssProgress['threshold'] ?? null;
+                        @endphp
+                        <dl class="row mb-2 small">
+                            <dt class="col-6 text-muted">Balance (g)</dt>
+                            <dd class="col-6 mb-2">{{ $sssBalance }}</dd>
+                            <dt class="col-6 text-muted">Silver Price</dt>
+                            <dd class="col-6 mb-2">RM {{ $silverPrice }}</dd>
+                            <dt class="col-6 text-muted">Silver Value</dt>
+                            <dd class="col-6 mb-0">RM {{ $silverValue }}</dd>
+                        </dl>
+                        @if ($sssProgressPct !== null)
+                            <div class="small text-muted mb-1">
+                                Progress to {{ $sssThreshold ?? '—' }}
+                                <span class="fw-semibold text-dark ms-1">{{ $sssProgressPct }}%</span>
+                            </div>
+                            <div class="progress" style="height:10px;">
+                                <div class="progress-bar bg-secondary"
+                                     role="progressbar"
+                                     style="width:{{ $sssProgressPct }}%;"
+                                     aria-valuenow="{{ $sssProgressPct }}"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100"></div>
+                            </div>
+                        @endif
+                    @else
+                        <p class="text-muted small mb-0">
+                            <i class="bi bi-info-circle me-1"></i>No SSS data available.
+                        </p>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        {{-- Card 4: Session --}}
+        <div class="col-md-6 col-lg-3">
             <div class="card h-100 border-0 shadow-sm">
                 <div class="card-header bg-info text-white py-2">
                     <i class="bi bi-phone me-1"></i> App Sessions
@@ -194,7 +243,7 @@
                             data-bs-target="#tab-pane-basic-info"
                             data-tab-name="basic-info"
                             type="button" role="tab">
-                        <i class="bi bi-person-lines-fill me-1"></i>Maklumat Asas Pengguna
+                        <i class="bi bi-person-lines-fill me-1"></i>Basic User Information
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">

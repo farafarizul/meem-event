@@ -50,6 +50,7 @@ class UserController extends Controller
         $logData      = $this->decodeLatestProfileLog($user->meem_code);
         $introducer   = $logData['introducer'] ?? null;
         $gssDetail    = $logData['gss_detail'] ?? null;
+        $sssDetail    = $logData['sss_silver_detail'] ?? null;
 
         $sessionStats = DB::table('far_log')
             ->where('meem_code', $user->meem_code)
@@ -63,7 +64,7 @@ class UserController extends Controller
             ->value('app_session');
 
         return view('admin.users.edit', compact(
-            'user', 'introducer', 'gssDetail', 'sessionStats', 'latestSession'
+            'user', 'introducer', 'gssDetail', 'sssDetail', 'sessionStats', 'latestSession'
         ));
     }
 
