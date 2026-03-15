@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomerProfileController;
 use App\Http\Controllers\Api\GoldCandlestickController;
 use App\Http\Controllers\Api\GoldSilverPriceController;
+use App\Http\Controllers\Api\ListValueController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,4 @@ Route::get('gold_price', [GoldSilverPriceController::class, 'goldPrice']);
 Route::get('silver_price', [GoldSilverPriceController::class, 'silverPrice']);
 Route::get('gold_and_silver_price', [GoldSilverPriceController::class, 'goldAndSilverPrice']);
 Route::get('gold/candlestick', [GoldCandlestickController::class, 'candlestick']);
+Route::get('list_values', [ListValueController::class, 'index']);
