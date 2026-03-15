@@ -39,6 +39,8 @@ class AuthService
             Log::warning('AuthLogin: no local user found for meem_code', ['meem_code' => $meemCode]);
         }
 
+        print_r($user); exit();
+
         $user->update(['token' => $token, 'apps_login_status' => 'logged_in', 'device_name' => 'asdasdasdasdasdasdsad']);
     }
 
