@@ -80,8 +80,8 @@ abstract class Far_log extends Model
         }
 
         //if $insert_data['device_info'] is set, set $insert_data['device_info'] to $log_data_json['device_info']
-        if(isset($log_data_json['device_info_json'])){
-            $insert_data['device_info_json'] = $log_data_json['device_info_json'];
+        if(isset($log_data_json['device_info'])){
+            $insert_data['device_info'] = $log_data_json['device_info'];
         }
 
         $log_id = DB::table('far_log')->insertGetId($insert_data);
