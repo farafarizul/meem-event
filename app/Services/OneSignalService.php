@@ -115,7 +115,7 @@ class OneSignalService
     private function dispatch(array $payload): array
     {
         $jsonPayload = json_encode($payload);
-        echo $this->restApiKey; exit();
+
         $ch = curl_init();
         curl_setopt_array($ch, [
             CURLOPT_URL            => $this->apiUrl,
