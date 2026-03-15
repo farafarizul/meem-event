@@ -9,6 +9,9 @@ use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\GoldPriceController;
 use App\Http\Controllers\Admin\GoldPriceDailyController;
 use App\Http\Controllers\Admin\GoldPriceSyncSettingController;
+use App\Http\Controllers\Admin\ListCountryController;
+use App\Http\Controllers\Admin\ListIndustryController;
+use App\Http\Controllers\Admin\ListStateController;
 use App\Http\Controllers\Admin\PushNotificationController;
 use App\Http\Controllers\Admin\SilverPriceController;
 use App\Http\Controllers\Admin\SilverPriceDailyController;
@@ -130,6 +133,21 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(
     Route::get('/silver-price-daily/{silverPriceDaily}', [SilverPriceDailyController::class, 'show'])->name('silver-price-daily.show');
     Route::post('/silver-price-daily/{silverPriceDaily}/sync-this', [SilverPriceDailyController::class, 'syncThis'])->name('silver-price-daily.sync-this');
     Route::post('/silver-price-daily/{silverPriceDaily}/regen-ai', [SilverPriceDailyController::class, 'regenAi'])->name('silver-price-daily.regen-ai');
+
+    // Settings — List of States
+    Route::get('/settings/list-states', [ListStateController::class, 'index'])->name('settings.list-states.index');
+    Route::get('/settings/list-states/datatable', [ListStateController::class, 'datatable'])->name('settings.list-states.datatable');
+    Route::post('/settings/list-states/sync', [ListStateController::class, 'sync'])->name('settings.list-states.sync');
+
+    // Settings — List of Countries
+    Route::get('/settings/list-countries', [ListCountryController::class, 'index'])->name('settings.list-countries.index');
+    Route::get('/settings/list-countries/datatable', [ListCountryController::class, 'datatable'])->name('settings.list-countries.datatable');
+    Route::post('/settings/list-countries/sync', [ListCountryController::class, 'sync'])->name('settings.list-countries.sync');
+
+    // Settings — List of Industries
+    Route::get('/settings/list-industries', [ListIndustryController::class, 'index'])->name('settings.list-industries.index');
+    Route::get('/settings/list-industries/datatable', [ListIndustryController::class, 'datatable'])->name('settings.list-industries.datatable');
+    Route::post('/settings/list-industries/sync', [ListIndustryController::class, 'sync'])->name('settings.list-industries.sync');
 });
 
 require __DIR__ . '/auth.php';
