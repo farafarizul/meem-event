@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('trail_operation', 200)->nullable();
             $table->string('meta_name', 200)->nullable();
             $table->string('meta_value', 200)->nullable();
+            $table->string('device_name', 200)->nullable();
             $table->text('device_info')->nullable();
             $table->text('log_data_json')->nullable();
             $table->string('create_dttm')->default('2024-07-23 05:23:08');
