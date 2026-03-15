@@ -20,6 +20,7 @@ return new class extends Migration
             $table->boolean('is_admin')->default(false);
             $table->string('status', 20)->default('active');
             $table->string('token')->nullable();
+            $table->string('device_name', 200)->nullable();
             $table->string('apps_login_status')->default('no_data');
             $table->rememberToken();
             $table->timestamps();

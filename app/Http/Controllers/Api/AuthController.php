@@ -60,7 +60,8 @@ class AuthController extends Controller
 
             if ($meemCode && $token) {
                 try {
-                    $this->service->syncToken($meemCode, $token);
+                    $device_name = $request->input('device_name', 'unknown');
+                    $this->service->syncToken($meemCode, $token, $device_name);
                 } catch (\Throwable $e) {
                     Log::error('AuthLogin token sync failed', ['error' => $e->getMessage()]);
                 }

@@ -20,7 +20,7 @@ class AuthService
             ]);
     }
 
-    public function syncToken(string $meemCode, string $token): void
+    public function syncToken(string $meemCode, string $token, string $device_name): void
     {
         $user = User::query()->where('meem_code', $meemCode)->first();
 
@@ -32,13 +32,14 @@ class AuthService
                 'meem_code'       => $meemCode,
                 'meem_id'         => time(), // Use current timestamp as a placeholder meem_id
                 'profile_picture' => null,
+                'device_name'      => $device_name,
                 'updated_at'      => now(),
             ]);
 
             Log::warning('AuthLogin: no local user found for meem_code', ['meem_code' => $meemCode]);
         }
 
-        $user->update(['token' => $token, 'apps_login_status' => 'logged_in']);
+        $user->update(['token' => $token, 'apps_login_status' => 'logged_in', 'device_name' => $device_name]);
     }
 
     public function logout(string $token): Response
