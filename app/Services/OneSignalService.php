@@ -125,7 +125,7 @@ class OneSignalService
             CURLOPT_TIMEOUT        => 30,
             CURLOPT_HTTPHEADER     => [
                 'Content-Type: application/json; charset=utf-8',
-                'Authorization: Basic ' . $this->restApiKey,
+                'Authorization: Key ' . $this->restApiKey,
             ],
         ]);
 
