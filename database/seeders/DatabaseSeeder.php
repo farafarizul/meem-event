@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             UserSeeder::class,
             EventSeeder::class,
+            GoldPriceDailySeeder::class,
+            SilverPriceDailySeeder::class,
         ]);
     }
 }
