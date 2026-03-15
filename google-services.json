@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "486560579857",
+    "project_id": "meem-apps-83fb2",
+    "storage_bucket": "meem-apps-83fb2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486560579857:android:7cf5c0301e3d9b2f7f4cb0",
+        "android_client_info": {
+          "package_name": "com.meem.meemapps"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYuyiQCtHTyqP-AYCqMa7jb-8iBQefJLw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
