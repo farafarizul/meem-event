@@ -128,6 +128,12 @@
                         <i class="bi bi-android2 me-2"></i>APK Management
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.push-notifications.*') ? 'active' : '' }}"
+                       href="{{ route('admin.push-notifications.index') }}">
+                        <i class="bi bi-bell me-2"></i>Push Notifications
+                    </a>
+                </li>
             </ul>
         </nav>
 
