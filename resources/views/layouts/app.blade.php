@@ -134,6 +134,40 @@
                         <i class="bi bi-bell me-2"></i>Push Notifications
                     </a>
                 </li>
+
+                {{-- Settings accordion --}}
+                <li class="nav-item">
+                    <a class="nav-link d-flex justify-content-between align-items-center
+                        {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}"
+                       data-bs-toggle="collapse" href="#settingsMenu" role="button"
+                       aria-expanded="{{ request()->routeIs('admin.settings.*') ? 'true' : 'false' }}"
+                       aria-controls="settingsMenu">
+                        <span><i class="bi bi-gear me-2"></i>Settings</span>
+                        <i class="bi bi-chevron-down small"></i>
+                    </a>
+                    <div class="collapse {{ request()->routeIs('admin.settings.*') ? 'show' : '' }}" id="settingsMenu">
+                        <ul class="nav flex-column ms-3 gap-1 mt-1">
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('admin.settings.list-states.*') ? 'active' : '' }}"
+                                   href="{{ route('admin.settings.list-states.index') }}">
+                                    <i class="bi bi-map me-2"></i>List of States
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('admin.settings.list-countries.*') ? 'active' : '' }}"
+                                   href="{{ route('admin.settings.list-countries.index') }}">
+                                    <i class="bi bi-globe me-2"></i>List of Countries
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('admin.settings.list-industries.*') ? 'active' : '' }}"
+                                   href="{{ route('admin.settings.list-industries.index') }}">
+                                    <i class="bi bi-building me-2"></i>List of Industries
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </nav>
 
