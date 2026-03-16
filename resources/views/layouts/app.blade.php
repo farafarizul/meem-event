@@ -165,6 +165,12 @@
                                     <i class="bi bi-building me-2"></i>List of Industries
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('admin.settings.list-identification-types.*') ? 'active' : '' }}"
+                                   href="{{ route('admin.settings.list-identification-types.index') }}">
+                                    <i class="bi bi-card-list me-2"></i>List of Identification
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
