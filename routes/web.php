@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\GoldPriceController;
 use App\Http\Controllers\Admin\GoldPriceDailyController;
 use App\Http\Controllers\Admin\GoldPriceSyncSettingController;
 use App\Http\Controllers\Admin\ListCountryController;
+use App\Http\Controllers\Admin\ListIdentificationTypeController;
 use App\Http\Controllers\Admin\ListIndustryController;
 use App\Http\Controllers\Admin\ListStateController;
 use App\Http\Controllers\Admin\PushNotificationController;
@@ -148,6 +149,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(
     Route::get('/settings/list-industries', [ListIndustryController::class, 'index'])->name('settings.list-industries.index');
     Route::get('/settings/list-industries/datatable', [ListIndustryController::class, 'datatable'])->name('settings.list-industries.datatable');
     Route::post('/settings/list-industries/sync', [ListIndustryController::class, 'sync'])->name('settings.list-industries.sync');
+
+    // Settings — List of Identification Types
+    Route::get('/settings/list-identification-types', [ListIdentificationTypeController::class, 'index'])->name('settings.list-identification-types.index');
+    Route::get('/settings/list-identification-types/datatable', [ListIdentificationTypeController::class, 'datatable'])->name('settings.list-identification-types.datatable');
+    Route::post('/settings/list-identification-types/sync', [ListIdentificationTypeController::class, 'sync'])->name('settings.list-identification-types.sync');
 });
 
 require __DIR__ . '/auth.php';
