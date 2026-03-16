@@ -30,12 +30,18 @@ class ListValueController extends Controller
                 ->orderBy('name', 'asc')
                 ->get();
 
+            $identificationTypes = DB::table('list_identification_type')
+                ->select('id', 'name')
+                ->orderBy('name', 'asc')
+                ->get();
+
             return response()->json([
                 'success' => true,
                 'data'    => [
-                    'list_states'     => $states,
-                    'list_countries'  => $countries,
-                    'list_industries' => $industries,
+                    'list_states'              => $states,
+                    'list_countries'           => $countries,
+                    'list_industries'          => $industries,
+                    'list_identification_type' => $identificationTypes,
                 ],
             ]);
         } catch (\Exception $e) {
